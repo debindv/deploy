@@ -1,37 +1,30 @@
 {
-  "name": "de-mocarcy",
-  "version": "1.0.0",
-  "description": "De-Mocracy",
-  "main": "truffle-config.js",
-  "directories": {
-    "test": "test"
-  },
+  "name": "de-mocracy",
+  "version": "2.0.0",
+  "description": "Blockchain based E-voting",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/www"
   },
-  "author": "Group 3",
+  "keywords": [],
+  "author": "Asher Debin Joan Uday",
   "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^1.18.9",
-    "lite-server": "^2.3.0"
-  },
   "dependencies": {
-    "@types/hapi": "^18.0.3",
-    "hapi": "^18.1.0",
-    "hapi-auth-cookie": "^10.0.0",
-    "hapi-auth-jwt": "^4.0.0",
-    "vision": "^5.4.4",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
+    "crypto-js": "*",
+    "dotenv": "^8.2.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-ejs-layouts": "^2.5.0",
     "express-messages": "^1.0.1",
     "express-session": "^1.15.6",
+    "ganache-cli": "^6.4.3",
+    "helmet": "^3.22.0",
     "mongoose": "^5.7.5",
     "passport": "^0.4.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "web3": "^1.0.0-beta.37",
+    "@truffle/hdwallet-provider": "*"
+
   }
 }
