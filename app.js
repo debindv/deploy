@@ -20,7 +20,7 @@ web3.eth.getCoinbase(function (err, account) {
 		coinbase = account;
 	}
 });
-//coinbase = "0x2Ac408A583D5D2B965C65437a0e8224Ada2Aee52";
+coinbase = "0x2Ac408A583D5D2B965C65437a0e8224Ada2Aee52";
 var contractAddress = "0x12e18E16D0E7079A1674741d17D1c163440AF1F2";
 const contractAbi = require('./contracts/contractAbi');
 
