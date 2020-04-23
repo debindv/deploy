@@ -4,7 +4,7 @@ const router = express.Router();
 const path = require('path');
 const Email = require('../models/Email');
 const login = require('./login');
- 
+//var coder = require("./node_modules/web3/lib/solidity/coder.js");
 // To ensure authentication
  
 function ensureAuthenticated(req, res, next) {
@@ -73,15 +73,31 @@ router.post('/', function(req, res, next) {
     if (err) throw err;
     else console.log('Sucess')
   })
-  
   //console.log(`HASH :${mailHash}`)
   //Pass Mail ID of the user along with voting Data
-  Election.methods.vote(voteData, mailHash)
-    .send({from: coinbase, gas:6000000}).catch((error) => {
-      console.log(error);
-    }).then(() => {
-      res.render('success', {mailHash:mailHash});
-    });
+  var functionName = 'vote' ;
+  var types = ['uint','bytes32']; 
+  var args = [`${voteData}`, `${mailHash}`];
+  var fullName = functionName + '(' + types.join() + ')';
+  var signature = crypto.createHash('sha256').update(fullName).digest('hex').slice(0,8);
+  //var signature = crypto.SHA3(fullName,{outputLength:256}).toString(crypto.enc.Hex).slice(0, 8);
+  var dataHex = signature + web3.coder.encodeParams(types, args);
+  var data = '0x'+dataHex;
+
+  var nonce = web3.toHex(web3.eth.getTransactionCount(coinbase));
+  var gasPrice = web3.toHex(web3.eth.gasPrice); 
+  var gasLimitHex = web3.toHex(6000000);
+  var rawTx = { 'nonce': nonce, 'gasPrice': gasPrice, 'gasLimit': gasLimitHex, 'from': account, 'to': address, 'data': data};
+  var tx = new Tx(rawTx);
+  tx.sign(privateKey);
+  var serializedTx = '0x'+tx.serialize().toString('hex');
+  web3.eth.sendRawTransaction(serializedTx, function(err, txHash){ console.log(err, txHash) });
+  // Election.methods.vote(voteData, mailHash)
+  //   .sendTransaction({from: coinbase, gas:6000000}).catch((error) => {
+  //     console.log(error);
+  //   }).then(() => {
+  //     res.render('success', {mailHash:mailHash});
+  //   });
   //res.send('Succesfully Voted');
  
 });

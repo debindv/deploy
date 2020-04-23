@@ -5,11 +5,11 @@ const session = require('express-session');
 var Web3 = require("web3");
 const flash = require('connect-flash');
 const Email = require('./models/Email');
-var helmet = require('helmet')
+var helmet = require('helmet');
 
-
-
-web3 = new Web3("http://localhost:8545");
+web3 = new Web3("https://rinkeby.infura.io/v3/24b49cc800a04404ae669233b6931097");
+//const web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/v3/24b49cc800a04404ae669233b6931097"));
+//web3 = new Web3("http://localhost:8545");
 
 const app = express();
 app.use(helmet());
@@ -17,7 +17,8 @@ app.set('view engine','ejs');
 
 web3.eth.getCoinbase(function (err, account) {
 	if(err === null) {
-		coinbase = account;
+    coinbase = account;
+    console.log(`up ${coinbase}`);
 	}
 });
 coinbase = "0x2Ac408A583D5D2B965C65437a0e8224Ada2Aee52";
