@@ -6,7 +6,7 @@ var Web3 = require("web3");
 const flash = require('connect-flash');
 const Email = require('./models/Email');
 var helmet = require('helmet');
-require('dotenv').config();
+//require('dotenv').config();
 
 web3 = new Web3("https://rinkeby.infura.io/v3/"+process.env.INFURA_API_KEY);
 //web3 = new Web3("http://localhost:8545");
