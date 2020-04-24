@@ -9,8 +9,6 @@
   "author": "Asher Debin Joan Uday",
   "license": "ISC",
   "dependencies": {
-    "node": "10.15.3",
-    "npm": "6.4.1",
     "@truffle/hdwallet-provider": "*",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
