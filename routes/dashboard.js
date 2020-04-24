@@ -99,8 +99,8 @@ router.post('/', function(req, res, next) {
   // tx.sign(privatekey);
   // var serializedTx = web3.utils.randomHex(0)+tx.serialize().toString('hex');
   // web3.eth.sendRawTransaction(serializedTx, function(err, txHash){ console.log(err, txHash) });
-
-    web3.eth.sendTransaction({from: coinbase, gas:6000000},Election.methods.vote(voteData, mailHash)).catch((error) => {
+  Election.methods.vote(voteData, mailHash)
+    .send({from: coinbase, gas:6000000}).catch((error) => {
       console.log(error);
     }).then(() => {
       res.render('success', {mailHash:mailHash});
