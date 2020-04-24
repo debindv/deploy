@@ -4,9 +4,11 @@ const router = express.Router();
 const path = require('path');
 const Email = require('../models/Email');
 const login = require('./login');
+const Tx = require('ethereumjs-tx').Transaction;
+require('dotenv').config();
 //var coder = require("./node_modules/web3/lib/solidity/coder.js");
 // To ensure authentication
- 
+
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
       return next();
@@ -75,30 +77,43 @@ router.post('/', function(req, res, next) {
   })
   //console.log(`HASH :${mailHash}`)
   //Pass Mail ID of the user along with voting Data
-  var functionName = 'vote' ;
-  var types = ['uint','bytes32']; 
-  var args = [`${voteData}`, `${mailHash}`];
-  var fullName = functionName + '(' + types.join() + ')';
-  var signature = crypto.createHash('sha256').update(fullName).digest('hex').slice(0,8);
-  //var signature = crypto.SHA3(fullName,{outputLength:256}).toString(crypto.enc.Hex).slice(0, 8);
-  var dataHex = signature + web3.coder.encodeParams(types, args);
-  var data = '0x'+dataHex;
+  // var functionName = 'vote' ;
+  // var types = ['uint','string']; 
+  // var args = [voteData, mailId];
+  // var fullName = functionName + '(' + types.join() + ')';
+  // var signature = crypto.createHash('sha256').update(fullName).digest('hex');
+  // //var signature = crypto.SHA3(fullName,{outputLength:256}).toString(crypto.enc.Hex).slice(0, 8);
+  // var dataHex = signature + web3.eth.abi.encodeParameters(types, args);
+  // var data = web3.utils.randomHex(0)+dataHex;
+  // //cid[counter] =  web3.utils.toBN(val._id).toString();
+  // var nonce = web3.utils.toHex(web3.eth.getTransactionCount(coinbase));
+  // // var gasPrice = web3.utils.toHex(web3.eth.gasPrice); 
+  // var gasLimitHex = web3.utils.toHex(6000000);
+  // var rawTx = { 'nonce': nonce, 'gasLimit': gasLimitHex, 'from': coinbase, 'to': contractAddress, 'data': data};
+  // console.log(rawTx);
+  
+  // privatekey = new Buffer(process.env.PRIVATE_KEY, 'hex');
+  // console.log(privatekey);
+  // const tx = new Tx(rawTx);
 
-  var nonce = web3.toHex(web3.eth.getTransactionCount(coinbase));
-  var gasPrice = web3.toHex(web3.eth.gasPrice); 
-  var gasLimitHex = web3.toHex(6000000);
-  var rawTx = { 'nonce': nonce, 'gasPrice': gasPrice, 'gasLimit': gasLimitHex, 'from': account, 'to': address, 'data': data};
-  var tx = new Tx(rawTx);
-  tx.sign(privateKey);
-  var serializedTx = '0x'+tx.serialize().toString('hex');
-  web3.eth.sendRawTransaction(serializedTx, function(err, txHash){ console.log(err, txHash) });
-  // Election.methods.vote(voteData, mailHash)
-  //   .sendTransaction({from: coinbase, gas:6000000}).catch((error) => {
-  //     console.log(error);
-  //   }).then(() => {
-  //     res.render('success', {mailHash:mailHash});
-  //   });
-  //res.send('Succesfully Voted');
+  // tx.sign(privatekey);
+  // var serializedTx = web3.utils.randomHex(0)+tx.serialize().toString('hex');
+  // web3.eth.sendRawTransaction(serializedTx, function(err, txHash){ console.log(err, txHash) });
+
+  //   // web3.eth.sendTransaction({from: coinbase, gas:6000000},Election.methods.vote(voteData, mailHash)).catch((error) => {
+  //   //   console.log(error);
+  //   // }).then(() => {
+  //   //   res.render('success', {mailHash:mailHash});
+  //   // });
+  // //res.send('Succesfully Voted');
+
+  Election.methods.vote(voteData, mailHash)
+    .sendTransaction({from: coinbase, gas:6000000}).catch((error) => {
+      console.log(error);
+    }).then(() => {
+      res.render('success', {mailHash:mailHash});
+    });
+  res.send('Succesfully Voted');
  
 });
 
