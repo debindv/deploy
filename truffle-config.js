@@ -11,7 +11,8 @@ module.exports = {
       //   gas: 6000000
       // },
       rinkeby: {
-        provider: () => new HDwalletProvider(process.env.MNEMONIC, "https://rinkeby.infura.io/v3/"+process.env.INFURA_API_KEY),
+        // provider: () => new HDwalletProvider(process.env.MNEMONIC, "https://rinkeby.infura.io/v3/"+process.env.INFURA_API_KEY),
+        provider: () => new HDwalletProvider("stand toss wide over huge predict razor prepare suffer sight wise bar", "https://rinkeby.infura.io/v3/24b49cc800a04404ae669233b6931097"),
         network_id: 4
       }
 

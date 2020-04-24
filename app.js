@@ -8,7 +8,7 @@ const Email = require('./models/Email');
 var helmet = require('helmet');
 require('dotenv').config();
 
-web3 = new Web3("https://rinkeby.infura.io/v3/"+ process.env.INFURA_API_KEY);
+web3 = new Web3("https://rinkeby.infura.io/v3/24b49cc800a04404ae669233b6931097");
 //web3 = new Web3("http://localhost:8545");
 
 const app = express();
