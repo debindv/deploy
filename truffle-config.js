@@ -1,5 +1,7 @@
 const HDwalletProvider = require('@truffle/hdwallet-provider');
-//require('dotenv').config();
+require('dotenv').config();
+var mnemonic = process.env.MNEMONIC;
+var key = process.env.INFURA_API_KEY;
 module.exports = {
     // See <http://truffleframework.com/docs/advanced/configuration>
     // for more about customizing your Truffle configuration!
@@ -11,7 +13,7 @@ module.exports = {
       //   gas: 6000000
       // },
       rinkeby: {
-        provider: () => new HDwalletProvider(process.env.MNEMONIC, "https://rinkeby.infura.io/v3/"+process.env.INFURA_API_KEY),
+        provider: () => new HDwalletProvider(mnemonic, "https://rinkeby.infura.io/v3/"+key),
         // provider: () => new HDwalletProvider(process.env.MNEMONIC, "https://rinkeby.infura.io/v3/24b49cc800a04404ae669233b6931097"),
         network_id: 4
       }
