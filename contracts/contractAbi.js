@@ -5,24 +5,6 @@ const contractAbi = [
 		"type": "constructor"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_candidateId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_mailId",
-				"type": "string"
-			}
-		],
-		"name": "vote",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "candidate",
 		"outputs": [
@@ -123,6 +105,24 @@ const contractAbi = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_candidateId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_mailId",
+				"type": "string"
+			}
+		],
+		"name": "vote",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{

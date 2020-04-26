@@ -6,29 +6,40 @@ var Web3 = require("web3");
 const flash = require('connect-flash');
 const Email = require('./models/Email');
 var helmet = require('helmet');
-require('dotenv').config();
-var key = (process.env.INFURA_API_KEY);
-web3 = new Web3("https://rinkeby.infura.io/v3/24b49cc800a04404ae669233b6931097");
-//web3 = new Web3("http://localhost:8545");
+const truffleConfig = require('./truffle-config.js');
+
+
+coinbase = '0x87BE41c278BD2489691c66Cf149A42d627592190';
+
 
 const app = express();
 app.use(helmet());
 app.set('view engine','ejs');
 
-web3.eth.getCoinbase(function (err, account) {
-	if(err === null) {
-    coinbase = account;
-    console.log(`up ${coinbase}`);
-	}
-});
-coinbase = "0x2Ac408A583D5D2B965C65437a0e8224Ada2Aee52";
-contractAddress = "0x12e18E16D0E7079A1674741d17D1c163440AF1F2";
+// web3.eth.getCoinbase(function (err, account) {
+// 	if(err === null) {
+//     coinbase = account;
+//     console.log(`up ${coinbase}`);
+// 	}
+// });
+
+contractAddress = "0xc873B4f847d53877fDC0e49bB8697F21bC84eCd9";
+smartContractHash = 'https://ropsten.etherscan.io/tx/0xb92e3efc179f72b702332486ab7cd9f8eaf879e36643ec1d442e412645eeb5cf'
 const contractAbi = require('./contracts/contractAbi');
 
+Provider = truffleConfig.networks.rinkeby.provider()
+web3 = new Web3(Provider);
 
+Election = new web3.eth.Contract(
+  contractAbi, contractAddress
+);
 
-
-Election = new web3.eth.Contract(contractAbi, contractAddress);
+//To deploy contract when the code start to execute everytime
+// Election = new web3.eth.Contract(
+//   contractAbi,
+// )
+//   .deploy({data: `BYTE CODE`})
+//   .send({ from: coinbase});
 
 
 // Passport Config
@@ -47,7 +58,7 @@ mongoose
   )
   .then(() => {
     console.log('MongoDB Connected');
-    Email.deleteMany({}, () => console.log('Verification table cleared'));
+    //Email.deleteMany({}, () => console.log('Verification table cleared'));
   })
   .catch(err => console.log(err));
 

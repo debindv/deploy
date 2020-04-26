@@ -25,6 +25,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "web3": "^1.0.0-beta.37",
-    "ethereumjs-tx": "*"
+    "ethereumjs-tx": "*",
+    "eth-block-tracker": "*"
   }
 }
