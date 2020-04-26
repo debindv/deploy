@@ -23,7 +23,7 @@ app.set('view engine','ejs');
 // 	}
 // });
 
-contractAddress = "0xc873B4f847d53877fDC0e49bB8697F21bC84eCd9";
+contractAddress = "0x6545aFe458eD2D32cfa1E87d10A0D0bAE05d2A37";
 smartContractHash = 'https://ropsten.etherscan.io/tx/0xb92e3efc179f72b702332486ab7cd9f8eaf879e36643ec1d442e412645eeb5cf'
 const contractAbi = require('./contracts/contractAbi');
 
