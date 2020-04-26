@@ -58,7 +58,7 @@ mongoose
   )
   .then(() => {
     console.log('MongoDB Connected');
-    //Email.deleteMany({}, () => console.log('Verification table cleared'));
+    Email.deleteMany({}, () => console.log('Verification table cleared'));
   })
   .catch(err => console.log(err));
 
