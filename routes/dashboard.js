@@ -23,20 +23,24 @@ function ensureAuthenticated(req, res, next) {
   var cname = [];
   var counter = 0;
  
-//router.get('/',ensureAuthenticated, (req,res) => res.sendFile(path.join(__dirname,'../front-end','dashboard.html'))
+
  
  
 router.get('/', ensureAuthenticated, (req,res) => {
-  //Get Mail ID of the User
-  //console.log(`email in dashboard = ${login.email}`);
+
+  //Get Mail ID of the User and generate hash
   mailId = login.email;
   var mailHash = crypto.createHash('sha256').update(mailId).digest('hex');
+
+
   //Check whether the Voter has already voted
   Election.methods.hasVoted(mailHash)
     .call({ from: coinbase }).then((cond) => {
+
       if(!cond) {                                               //IF NOT VOTED
         Election.methods.candidatesCount()                      //DISPLAY THE CANDIDATES
           .call({ from: coinbase }).then((count) => {
+
             console.log(coinbase);
             for ( var i = 1; i <= count; i++ ) {
               Election.methods.getCandidate(i)
@@ -44,9 +48,9 @@ router.get('/', ensureAuthenticated, (req,res) => {
                   cid[counter] =  web3.utils.toBN(val._id).toString();
                   cname[counter] = val._name;
                   counter++;
-                  //console.log(`data.id = ${cid}  and data.name = ${cname} `);
+                  
                   if(counter==count){
-                    //console.log(`final cid = ${cid}  `);
+                    
                     counter = 0;
                     res.render('dashboard', {cid:cid, cname:cname});                //SEND THE CANDIDATE DETAILS TO DASHBOARD.EJS
                   }
@@ -62,9 +66,11 @@ router.get('/', ensureAuthenticated, (req,res) => {
 
 
 router.post('/', function(req, res, next) {
+
   var voteData = req.body.selectpicker;
+
+  //Get Mail ID of the User and generate hash
   mailId = login.email;
-  //Converting mailId to its hash value using SHA256
   var mailHash = crypto.createHash('sha256').update(mailId).digest('hex');
   
   //SEND THE VOTING DETAILS TO BLOCKCHAIN NETWORK
@@ -85,7 +91,7 @@ router.post('/', function(req, res, next) {
         candidateid : voteData
        }).save((err,doc) => {
         if (err) throw err;
-        else console.log('Sucess')
+        else console.log('Success')
       })
     }).catch((error) => {
       console.log(error);
