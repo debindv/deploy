@@ -76,7 +76,7 @@ router.post('/', function(req, res, next) {
   //SEND THE VOTING DETAILS TO BLOCKCHAIN NETWORK
   let transactionHash;
   Election.methods.vote(voteData, mailHash)
-    .send({from: coinbase, gas:6000000}).then((reciept) => {
+    .send({ from: coinbase, gas:6000000 }).then((reciept) => {
       transactionHash = reciept.transactionHash;
       hash[mailHash]=transactionHash;
       console.log(reciept);

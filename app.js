@@ -9,7 +9,7 @@ var helmet = require('helmet');
 const truffleConfig = require('./truffle-config.js');
 
 
-coinbase = '0x87BE41c278BD2489691c66Cf149A42d627592190';
+coinbase = '0x40f4DE94adE960620c00474C12752a5fA49CB78b';
 
 
 const app = express();
