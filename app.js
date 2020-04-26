@@ -23,8 +23,8 @@ app.set('view engine','ejs');
 // 	}
 // });
 
-contractAddress = "0x6545aFe458eD2D32cfa1E87d10A0D0bAE05d2A37";
-smartContractHash = 'https://ropsten.etherscan.io/tx/0xb92e3efc179f72b702332486ab7cd9f8eaf879e36643ec1d442e412645eeb5cf'
+contractAddress = "0xE649679211b12eADe48E7803f2135aa1C72e4632";
+//smartContractHash = 'https://ropsten.etherscan.io/tx/0xb92e3efc179f72b702332486ab7cd9f8eaf879e36643ec1d442e412645eeb5cf'
 const contractAbi = require('./contracts/contractAbi');
 
 Provider = truffleConfig.networks.rinkeby.provider()
