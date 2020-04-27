@@ -7,6 +7,7 @@ const flash = require('connect-flash');
 const Email = require('./models/Email');
 var helmet = require('helmet');
 const truffleConfig = require('./truffle-config.js');
+const voted = require('./models/hasVoted');
 
 //coinbase = '0x40f4DE94adE960620c00474C12752a5fA49CB78b';
 coinbase = '0x40f4DE94adE960620c00474C12752a5fA49CB78b';
@@ -21,7 +22,7 @@ app.set('view engine','ejs');
 // 	}
 // });
 
-contractAddress = "0x298F50AFDB8133c2c7963E25ad9Ff3eC55B615FC";
+contractAddress = "0x74d2C209EB805411315BC025bF0f1d596c2a6b78";
 //smartContractHash = 'https://ropsten.etherscan.io/tx/0xb92e3efc179f72b702332486ab7cd9f8eaf879e36643ec1d442e412645eeb5cf'
 const contractAbi = require('./contracts/contractAbi');
 
@@ -56,7 +57,8 @@ mongoose
   )
   .then(() => {
     console.log('MongoDB Connected');
-    //Email.deleteMany({}, () => console.log('Verification table cleared'));
+    // Email.deleteMany({}, () => console.log('Verification table cleared'));
+    // voted.deleteMany({}, () => console.log('Voted table cleared'));
   })
   .catch(err => console.log(err));
 
