@@ -8,10 +8,8 @@ const Email = require('./models/Email');
 var helmet = require('helmet');
 const truffleConfig = require('./truffle-config.js');
 
-
+//coinbase = '0x40f4DE94adE960620c00474C12752a5fA49CB78b';
 coinbase = '0x40f4DE94adE960620c00474C12752a5fA49CB78b';
-
-
 const app = express();
 app.use(helmet());
 app.set('view engine','ejs');
@@ -106,9 +104,10 @@ app.use('/dashboard', require('./routes/dashboard'));
 app.use('/result', require('./routes/result'));
 app.use('/logout', require('./routes/logout'));
 app.use('/verification', require('./routes/verification'));
-
-
-
+app.use('/coinbase', require('./routes/coinbase'));
+app.use('/contractAddress', require('./routes/contractAddress'));
+app.use('/votedList', require('./routes/votedList'));
+app.use('/admin_dashboard', require('./routes/admin_dashboard'));
 
 
 module.exports = app;

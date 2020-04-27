@@ -4,6 +4,7 @@ const router = express.Router();
 const path = require('path');
 const Email = require('../models/Email');
 const login = require('./login');
+const voted = require('../models/hasVoted');
 let hash=[];
 // To ensure authentication
 
@@ -85,13 +86,20 @@ router.post('/', function(req, res, next) {
       res.render('success', {mailHash:reciept.transactionHash});
     }).then( () => {
 
-      //Adding mailHash and Candidate ID to a new collection
+      //Adding the voter to voted collection
+      new voted({
+        email: mailId
+      }).save((err, doc) => {
+        if (err) throw err;
+        else console.log("Added MailID to VOTED list");
+      });
+      //Adding transactionHash and Candidate ID to a new collection
       new Email({
         transactionHash : hash[mailHash],
         candidateid : voteData
        }).save((err,doc) => {
         if (err) throw err;
-        else console.log('Success')
+        else console.log('Added Transaction hash to Collection')
       })
     }).catch((error) => {
       console.log(error);
