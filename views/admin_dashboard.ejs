@@ -30,18 +30,18 @@
   
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav ml-auto ">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item ">
           <a class="nav-link" href="/result">Result</a>
-        </li>    
+        </li>     -->
         <li class="nav-item">
           <a class="nav-link" href="/logout">Logout</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="/verification">Verify</a>
-        </li>
+        </li> -->
         
       </ul>
       
@@ -54,10 +54,13 @@
   </div>
 <div class="container">
   <div class="jumbotron">
+    <div class="dropdown">
+        <div class="text-center">
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo" style="margin-top: 25px; margin-bottom: 25px;">Coinbase Updation</button>
+              <div id="demo" class="collapse">
     <form name="coinUpdation" method="post" action="/coinbase">
         <table>
             <tr>
-            <td>Coinbase</td>
             <td><input type="text" name="coinbase" ></td>
             </tr>
             <tr>
@@ -65,9 +68,29 @@
             </tr>
         </table>
         </form>
+        </div>
+        </div>
+    </div>
+        <div class="dropdown">
+            <div class="text-center"></div>
+        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo" style="margin-top: 25px; margin-bottom: 25px;">Contract Address Updation</button>
+              <div id="demo" class="collapse">
+        <form name="addressUpdation" method="post" action="/contractAddress">
+            <table>
+                <tr>
+                <td><input type="text" name="contractAddress" ></td>
+                </tr>
+                <tr>
+                <td colspan="2"><input type="submit" value="update" ></td>
+                </tr>
+            </table>
+            </form>
+              </div>
+              </div>
+       
         <div class="col">
             <div class="text-center">
-              <a type="button" class="btn btn-success" href="/votedList">Voted List</a>
+              <a type="button" class="btn btn-primary" href="/votedList">Voted List</a>
             </div>
           </div>
     
