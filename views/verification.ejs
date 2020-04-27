@@ -103,8 +103,10 @@
         
             <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search using hash">
             <p class="text-center" >SMART CONTRACT VERIFICATION :</p>
-            <p class="text-center" >https://ropsten.etherscan.io/tx/0x664bef4c7ece971453a532e581cd1a156381a43432b540185cc4252fba033cf5</p>
-            <table class="table" id="myTable">
+            <!--p class="text-center" >https://ropsten.etherscan.io/tx/0x664bef4c7ece971453a532e581cd1a156381a43432b540185cc4252fba033cf5</p-->
+            <p class="text-center" ><a href="https://ropsten.etherscan.io/tx/0x664bef4c7ece971453a532e581cd1a156381a43432b540185cc4252fba033cf5">Verify Transaction</a></p>
+            <div class="table-responsive">
+            <table class="table table striped" id="myTable">
                <tr>
                    <th>Hash ID</th>
                    <th>Candidate ID</th>
@@ -116,6 +118,7 @@
                 </tr>
          <% }) %>
            </table>
+        </div>
         
 
 
