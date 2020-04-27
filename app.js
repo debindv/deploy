@@ -108,7 +108,7 @@ app.use('/coinbase', require('./routes/coinbase'));
 app.use('/contractAddress', require('./routes/contractAddress'));
 app.use('/votedList', require('./routes/votedList'));
 app.use('/admin_dashboard', require('./routes/admin_dashboard'));
-
+app.use('/adminLogin', require('./routes/adminLogin'));
 
 module.exports = app;
 
