@@ -56,8 +56,19 @@
   <div class="jumbotron">
     <h1 class="text-center">Access Denied</h1>      
     <p class="text-center">Dear Citizen,  you have already casted your vote. </p>
-    <p class="text-center" >Your Transaction Hash ID : <span id="copy"> <%=mailHash%> </span>  </p>
-    <div class="col">
+    <p class="text-center" >Your Hash ID : </p>
+   <div class="row text-center">
+    <div class="container">
+    <div class="table-responsive">
+    <table class="table">
+      <tr>
+        <td style="font-size:2vw"><%= mailHash %></td>
+   </tr>
+    </table>
+    </div>
+    </div>
+   </div>
+<div class="col">
       <div class="text-center">
         <a type="button" class="btn btn-success" href="https://ropsten.etherscan.io/tx/<%=mailHash%>">Verify Transaction</a>
       </div>
