@@ -8,7 +8,63 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-</head>
+    <style>
+      .button{
+          display: inline-block;
+          width: 220px;
+          height: 60px;
+          border: 2px solid black;
+          color:red;
+          font-size: 20px;
+          font-weight: bold;
+          text-transform: uppercase;
+          text-align: center;
+          text-decoration: none;
+          line-height: 56px;
+          box-sizing: border-box;
+          border-radius: 50px;
+          background-color: transparent;
+          outline:none;
+      }
+        .active{
+          font-size: 0;
+          width: 50px;
+          height:  50px;
+          border-radius:50%;
+          border-left-color: transparent;
+          animation: rotate 1.4s ease 0.5s infinite;
+        }
+        @keyframes rotate{
+          0%{
+            transform: rotate(360deg) ;
+          }
+        }
+        .success{
+          position: relative;
+          background-color: #fff;
+          animation: bounce .3s ease-in;
+        }
+        @keyframes bounce{
+          0%{
+            transform: scale(0.9);
+          }
+        }
+        .success:before{
+  
+          content:'';
+          position: absolute;
+          background: url(check-solid.svg) no-repeat;
+          left:0;
+          right:0;
+          margin:0 auto;
+          width: 31px;
+          height: 31px;
+          line-height: 31px;
+          top: 8px;
+  
+        }
+      </style>
+  </head>
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <a class="navbar-brand" href="/">De-Mocracy</a>
@@ -79,7 +135,7 @@
                           </optgroup>
                       </select>
                       <br>
-                      <input type="submit" value="Vote" class="btn btn-success mt-2 text-center" style="margin-top: 20px;" />
+                      <input type="submit" value="Vote" class="button" style="margin-top: 20px;" />
                   </form>
       
               </div>
@@ -106,7 +162,24 @@
     <footer><p class="display-3 text-center" style="font-size:1vw">© Copyright 2020 </br>Team Blockbusters</p>
       <p class="display-3 text-center" style="font-size:1vw">. ASHER . DEBIN . JOAN . UDAY .</p>
     
-   
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+
+      </script> 
+      <script>
+          $(document).ready(function(){
+             $(".button").click(function(){
+                $(this).addClass("active"); 
+                setTimeout(function(){
+                  $(".button").addClass("success")
+                },370000);
+                setTimeout(function(){
+                  $(".button").removeClass("active");
+                  $(".button").removeClass("success");
+                }, 100000);
+             }); 
+          });
+      </script>
+
  
    
  
