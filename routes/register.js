@@ -11,7 +11,8 @@ const bcrypt = require('bcryptjs');
 router.get('/' ,(req,res) => res.render('register'));
 
 router.post('/', (req, res) => {
-  const { name,ano, email, password, password2 } = req.body;
+  var { name,ano, email, password, password2 } = req.body;
+  email = email.toLowerCase();
   let errors = [];
 
   if (!name || !email || !password || !password2) {
