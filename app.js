@@ -111,7 +111,7 @@ app.use('/verification', require('./routes/verification'));
 // app.use('/votedList', require('./routes/votedList'));
 // app.use('/admin_dashboard', require('./routes/admin_dashboard'));
 // app.use('/adminLogin', require('./routes/adminLogin'));
-app.use('/users', require('./routes/admin.js'));
+app.use('/admin', require('./routes/admin.js'));
 
 module.exports = app;
 
