@@ -10,8 +10,8 @@ router.post('/login',(req, res, next) => {
  
     
     passport.authenticate('local', {
-      successRedirect: '/dashboard',
-      failureRedirect: '/login',
+      successRedirect: '/admin/dashboard',
+      failureRedirect: '/admin/login',
       failureFlash: true
     })(req, res, next);
   });
