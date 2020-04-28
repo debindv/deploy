@@ -106,12 +106,7 @@ app.use('/dashboard', require('./routes/dashboard'));
 app.use('/result', require('./routes/result'));
 app.use('/logout', require('./routes/logout'));
 app.use('/verification', require('./routes/verification'));
-// app.use('/coinbase', require('./routes/coinbase'));
-// app.use('/contractAddress', require('./routes/contractAddress'));
-// app.use('/votedList', require('./routes/votedList'));
-// app.use('/admin_dashboard', require('./routes/admin_dashboard'));
-// app.use('/adminLogin', require('./routes/adminLogin'));
-app.use('/admin', require('./routes/admin.js'));
+app.use('/admin', require('./routes/admin'));
 
 module.exports = app;
 
