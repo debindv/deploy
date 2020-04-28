@@ -85,10 +85,11 @@ router.post('/', function(req, res, next) {
       //RENDER THE SUCESS PAGE
       res.render('success', {mailHash:reciept.transactionHash});
     }).then( () => {
-
+      d = new Date();
       //Adding the voter to voted collection
       new voted({
-        email: mailId
+        email: mailId,
+        date : d
       }).save((err, doc) => {
         if (err) throw err;
         else console.log("Added MailID to VOTED list");

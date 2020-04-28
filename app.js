@@ -106,6 +106,7 @@ app.use('/dashboard', require('./routes/dashboard'));
 app.use('/result', require('./routes/result'));
 app.use('/logout', require('./routes/logout'));
 app.use('/verification', require('./routes/verification'));
+app.use('/votedList', require('./routes/votedList'));
 app.use('/admin', require('./routes/admin'));
 
 module.exports = app;
