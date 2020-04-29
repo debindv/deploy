@@ -26,28 +26,28 @@ function ensureAuthenticated(req, res, next) {
 //Admin Login
 router.get('/login', (req,res) => res.render('adminLogin'));
 
-router.post('/login',(req, res) => {
+router.post('/login',(req, res, next) => {
 
     const {emailID,password} = req.body;
    
-    admin.findOne({emailID:emailID}).then(user => {
-        if(user){
-           console.log(user.password);
-           if(user.password == password){
-             res.redirect('/admin/dashboard');
-           } else {
-             res.send('Passwords do not match');
-           }
-        }
-        else
-            console.log('user not found');
-   });
+  //   admin.findOne({emailID:emailID}).then(user => {
+  //       if(user){
+  //          console.log(user.password);
+  //          if(user.password == password){
+  //            res.redirect('/admin/dashboard');
+  //          } else {
+  //            res.send('Passwords do not match');
+  //          }
+  //       }
+  //       else
+  //           console.log('user not found');
+  //  });
 
-  //  passport.authenticate('admin-local',{
-  //      successRedirect: '/admin/dashboard',
-  //      failureRedirect: '/admin/login',
-  //      failureMessage: 'oopss'
-  //  })(req,res,next);
+   passport.authenticate('admin-local',{
+       successRedirect: '/admin/dashboard',
+       failureRedirect: '/admin/login',
+       failureMessage: 'oopss'
+   })(req,res,next);
     
 
   });
@@ -55,9 +55,10 @@ router.post('/login',(req, res) => {
 
   var ucount = 0;
   var vcount = 0;
-//Admin Dashboard
 
-router.get('/dashboard',  (req,res) => {
+  
+//Admin Dashboard
+router.get('/dashboard', ensureAuthenticated, (req,res) => {
   User.countDocuments()
     .then((no) => ucount = no)
       .then(() => hasVoted.countDocuments())
