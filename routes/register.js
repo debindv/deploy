@@ -47,8 +47,8 @@ router.post('/', (req, res) => {
           password2
         });
       } else {
-
-        Aadhar.findOne({ ano: ano, name:name, email:email }).then(user => {
+        console.log(`ANO: ${ano}, NAme: ${name}, EMail : ${email}`);
+        Aadhar.findOne({ ano1: ano, name1:name, email1:email }).then(user => {
           if (user) {
             const newUser = new User({
               name,
