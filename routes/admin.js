@@ -153,16 +153,16 @@ router.post('/address', (req,res) => {
     res.redirect('/admin/dashboard');
   }
   else {
-    // contractAddress = addr;
-    // console.log(`address = ${addr}`);
-    // const contractAbi = require('./../contracts/contractAbi');
+    contractAddress = addr;
+    console.log(`address = ${addr}`);
+    const contractAbi = require('./../contracts/contractAbi');
 
-    // Election = new web3.eth.Contract(
-    //   contractAbi, contractAddress
-    // );
-    // console.log('Contract UPDATED')
-    // Email.deleteMany({}, () => console.log('Verification table cleared'));
-    // hasVoted.deleteMany({}, () => console.log('Has Voted Table cleared'));
+    Election = new web3.eth.Contract(
+      contractAbi, contractAddress
+    );
+    console.log('Contract UPDATED')
+    Email.deleteMany({}, () => console.log('Verification table cleared'));
+    hasVoted.deleteMany({}, () => console.log('Has Voted Table cleared'));
     req.flash('success_msg', 'Successfully Updated');
     res.redirect('/admin/dashboard');
   }
@@ -179,12 +179,12 @@ router.post('/coinbase', (req,res) => {
     res.redirect('/admin/dashboard');
   }
   else {
-    // const provider = new HDwalletProvider(
-    //   privateKey,
-    //   'https://ropsten.infura.io/v3/24b49cc800a04404ae669233b6931097'
-    // );
-    // web3 = new Web3(provider);
-    // console.log("SUCCESS IN COIN");
+    const provider = new HDwalletProvider(
+      privateKey,
+      'https://ropsten.infura.io/v3/24b49cc800a04404ae669233b6931097'
+    );
+    web3 = new Web3(provider);
+    console.log("SUCCESS IN COIN");
     req.flash('success_msg', 'Successfully Updated');
     res.redirect('/admin/dashboard');
   }
