@@ -4,8 +4,11 @@ const bcrypt = require('bcryptjs');
 // Load User model
 const User = require('../models/User');
 
+// Load Admin model
+const admin = require('../models/admin');
+
 module.exports = function(passport) {
-  passport.use(
+  passport.use( 'user-local',
     new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
       // Match user
       User.findOne({
@@ -28,6 +31,32 @@ module.exports = function(passport) {
     })
   );
 
+
+  passport.use( 'admin-local',
+  new LocalStrategy({usernameField: 'emailID'}, (emailID,password,done) => {
+    admin.findOne({
+      emailID: emailID
+    }).then(user => {
+      if (!user) {
+        return done(null, false);
+      }
+      console.log('found user');
+
+       // Match password
+       bcrypt.compare(password, user.password, (err, isMatch) => {
+        if (err) throw err;
+        if (isMatch) {
+          console.log('match');
+          return done(null, user);
+        } else {
+          console.log('no match');
+          return done(null, false,{ message: 'Password incorrect' });
+        }
+      });
+    });
+  })
+);
+
   passport.serializeUser(function(user, done) {
     done(null, user.id);
   });
@@ -36,5 +65,12 @@ module.exports = function(passport) {
     User.findById(id, function(err, user) {
       done(err, user);
     });
+    
   });
 };
+
+
+
+
+
+

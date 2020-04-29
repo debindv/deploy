@@ -20,6 +20,6 @@ const AadharSchema = new mongoose.Schema({
   }
 });
 
-const User = mongoose.model('Aadhar_details', AadharSchema);
+const Aadhar = mongoose.model('Aadhar_details', AadharSchema);
 
-module.exports = User;
+module.exports = Aadhar;

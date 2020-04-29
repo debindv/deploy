@@ -8,6 +8,7 @@ const Email = require('./models/Email');
 var helmet = require('helmet');
 const truffleConfig = require('./truffle-config.js');
 const voted = require('./models/hasVoted');
+const admin = require('./models/admin');
 
 //coinbase = '0x40f4DE94adE960620c00474C12752a5fA49CB78b';
 coinbase = '0x40f4DE94adE960620c00474C12752a5fA49CB78b';
@@ -57,8 +58,6 @@ mongoose
   )
   .then(() => {
     console.log('MongoDB Connected');
-    // Email.deleteMany({}, () => console.log('Verification table cleared'));
-    // voted.deleteMany({}, () => console.log('Voted table cleared'));
   })
   .catch(err => console.log(err));
 
@@ -106,7 +105,7 @@ app.use('/dashboard', require('./routes/dashboard'));
 app.use('/result', require('./routes/result'));
 app.use('/logout', require('./routes/logout'));
 app.use('/verification', require('./routes/verification'));
-app.use('/votedList', require('./routes/votedList'));
+
 app.use('/admin', require('./routes/admin'));
 
 module.exports = app;

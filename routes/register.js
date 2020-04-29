@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
       password,
       password2
     });
-  } else {
+  }  else {
     User.findOne({ email: email }).then(user => {
       if (user) {
         errors.push({ msg: 'Email already exists' });
@@ -52,7 +52,6 @@ router.post('/', (req, res) => {
           if (user) {
             const newUser = new User({
               name,
-              ano,
               email,
               password
             });
