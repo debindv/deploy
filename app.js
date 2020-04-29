@@ -10,8 +10,8 @@ const truffleConfig = require('./truffle-config.js');
 const voted = require('./models/hasVoted');
 const admin = require('./models/admin');
 
-//coinbase = '0x40f4DE94adE960620c00474C12752a5fA49CB78b';
 coinbase = '0x40f4DE94adE960620c00474C12752a5fA49CB78b';
+//coinbase = '0x40f4DE94adE960620c00474C12752a5fA49CB78b';
 const app = express();
 app.use(helmet());
 app.set('view engine','ejs');
@@ -58,6 +58,8 @@ mongoose
   )
   .then(() => {
     console.log('MongoDB Connected');
+    // Email.deleteMany({}, () => console.log('Verification table cleared'));
+    // voted.deleteMany({}, () => console.log('Has Voted Table cleared'));
   })
   .catch(err => console.log(err));
 

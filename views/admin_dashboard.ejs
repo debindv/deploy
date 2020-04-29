@@ -47,12 +47,14 @@
           
       </div>
       <div class="col-sm-4 text-white bg-warning">
-        <h3 class="text-center font-weight-normal">Coinabse</h3>
+        <h3 class="text-center font-weight-normal">Coinbase</h3>
         <div class="container">
           <form action="/admin/coinbase" method="post">
             <div class="form-group">
-              <label for="email">Enter contract address:</label>
+              <label for="email">Enter coinbase address:</label>
               <input type="text" class="form-control" name="coinbase" placeholder="Eg: 0x40f4DE94adE960620c00474C12752a5fA49CB78b" id="coinbase">
+              <label for="email">Enter Private Key:</label>
+              <input type="text" class="form-control" name="privatekey" placeholder="Eg: 0x23eb4fcdaf0e777d818e96f8e1ffea034dfd881f24ed745db52b" id="privatekey">
             </div>
             <button type="submit"  class="btn btn-light">Submit</button>
           </form>

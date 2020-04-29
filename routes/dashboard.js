@@ -73,7 +73,7 @@ router.post('/', function(req, res, next) {
   //Get Mail ID of the User and generate hash
   mailId = login.email;
   var mailHash = crypto.createHash('sha256').update(mailId).digest('hex');
-  
+  console.log(`COINBASE IN SEND ${coinbase}`);
   //SEND THE VOTING DETAILS TO BLOCKCHAIN NETWORK
   let transactionHash;
   Election.methods.vote(voteData, mailHash)

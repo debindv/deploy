@@ -5,7 +5,10 @@ const admin = require('../models/admin');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const hasVoted = require('../models/hasVoted');
+const Email = require('../models/Email');
 require('../config/passport')(passport); 
+var Web3 = require("web3");
+const HDwalletProvider = require('@truffle/hdwallet-provider');
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -78,15 +81,32 @@ router.get('/votedList', (req,res) => {
 //Contract address
 router.post('/address', (req,res) => {
   var addr = req.body.address;
+  addr = addr.trim();
+  contractAddress = addr;
   console.log(`address = ${addr}`);
+  const contractAbi = require('./../contracts/contractAbi');
+
+  Election = new web3.eth.Contract(
+    contractAbi, contractAddress
+  );
+  console.log('Contract UPDATED')
+  Email.deleteMany({}, () => console.log('Verification table cleared'));
+  hasVoted.deleteMany({}, () => console.log('Has Voted Table cleared'));
   res.redirect('/admin/dashboard');
 });
 
 
 //Coinbase
 router.post('/coinbase', (req,res) => {
-  var coinbase = req.body.coinbase;
+  coinbase = req.body.coinbase;
+  privateKey = req.body.privatekey;
+  const provider = new HDwalletProvider(
+    privateKey,
+    'https://ropsten.infura.io/v3/24b49cc800a04404ae669233b6931097'
+  );
+  web3 = new Web3(provider);
   console.log(`coinbase = ${coinbase}`);
+  console.log(`PVT KEY = ${privateKey}`);
   res.redirect('/admin/dashboard');
 });
 
