@@ -14,6 +14,6 @@ const EmailSchema = new mongoose.Schema({
   
 });
 
-const User = mongoose.model('Email_details', EmailSchema);
+const Email = mongoose.model('Email_details', EmailSchema);
 
-module.exports = User;
+module.exports = Email;
