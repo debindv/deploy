@@ -10,7 +10,7 @@ const Aadhar = require('../models/Aadhar');
 require('../config/passport')(passport); 
 var Web3 = require("web3");
 const HDwalletProvider = require('@truffle/hdwallet-provider');
-
+let errors = [];
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
       return next();
@@ -63,7 +63,8 @@ router.get('/dashboard', ensureAuthenticated, (req,res) => {
     .then((no) => ucount = no)
       .then(() => hasVoted.countDocuments())
         .then((no) => vcount = no)
-            .then(() => res.render('admin_dashboard', {ucount:ucount, vcount:vcount}));
+            .then(() => res.render('admin_dashboard', {ucount:ucount, vcount:vcount, errors}))
+            
   
   // console.log(`ucount = ${ucount}`);
   // hasVoted.countDocuments().then((no) => console.log(`Voted count = ${no}`));
@@ -86,13 +87,20 @@ router.get('/register', (req,res) => {
 });
 
 router.post('/register', (req,res) => {
-  let errors = [];
+  errors = [];
   var { name,ano, email } = req.body;
   //console.log(`NAME: ${name}, ANO: ${ano},EMAIL: ${email}`);
   email = email.toLowerCase();
-  if (!name || !email || ano ) {
+  if (!name || !email || !ano ) {
     errors.push({ msg: 'Please enter all fields' });
+    res.render('register_aadhar', {
+      errors,
+      name,
+      email,
+      ano
+    });
   }
+  else {
   User.findOne({ email: email }).then(user => {
     if (user) {
       errors.push({ msg: 'Email already exists' });
@@ -102,31 +110,46 @@ router.post('/register', (req,res) => {
         email,
         ano
       });
-    } else {
-      new Aadhar({
-        name1 : name,
-        ano1 : ano,
-        email1 : email
-       }).save(() => {
-          console.log('Added Transaction hash to Collection');
-          res.redirect('/admin/dashboard');
-        }).catch((error) => {
-          console.log(error);
+    }
+    else {
+      Aadhar.findOne({ano: ano}).then(user => {
+        if(user) {
+          errors.push({ msg: 'Aadhar number already exists' });
+          res.render('register_aadhar', {
+            errors,
+            name,
+            email,
+            ano
+          });
+        }
+        else {
+          new Aadhar({
+            name1 : name,
+            ano1 : ano,
+            email1 : email
+           }).save(() => {
+              req.flash('success_msg', 'Successfully Added to Aadhar collection');
+              console.log('Added aadhar details to Collection');
+              res.redirect('/admin/dashboard');
+            });
+            
+          }
         });
-      }
-  })
+    }
+  }).catch((error) => {
+    console.log(error);
+  });
+}
 });
 
 //Contract address
 router.post('/address', (req,res) => {
   var addr = req.body.address;
   addr = addr.trim();
-  let errors = [];
+  errors = [];
   if (!addr) {
     errors.push({ msg: 'Please enter all fields' });
-    res.render('admin_dashboard', {
-      errors
-    });
+    res.redirect('/admin/dashboard');
   }
   else {
     contractAddress = addr;
@@ -139,6 +162,7 @@ router.post('/address', (req,res) => {
     console.log('Contract UPDATED')
     Email.deleteMany({}, () => console.log('Verification table cleared'));
     hasVoted.deleteMany({}, () => console.log('Has Voted Table cleared'));
+    req.flash('success_msg', 'Successfully Updated');
     res.redirect('/admin/dashboard');
   }
 });
@@ -146,16 +170,23 @@ router.post('/address', (req,res) => {
 
 //Coinbase
 router.post('/coinbase', (req,res) => {
-  coinbase = req.body.coinbase;
-  privatekey = req.body.privatekey;
-  
-  const provider = new HDwalletProvider(
-    privateKey,
-    'https://ropsten.infura.io/v3/24b49cc800a04404ae669233b6931097'
-  );
-  web3 = new Web3(provider);
-  
-  res.redirect('/admin/dashboard');
+  var coin = req.body.coinbase;
+  var key = req.body.privatekey;
+  errors = []
+  if (!coin || !key) {
+    errors.push({ msg: 'Please enter all fields' });
+    res.redirect('/admin/dashboard');
+  }
+  else {
+    const provider = new HDwalletProvider(
+      privateKey,
+      'https://ropsten.infura.io/v3/24b49cc800a04404ae669233b6931097'
+    );
+    web3 = new Web3(provider);
+    console.log("SUCCESS IN COIN");
+    req.flash('success_msg', 'Successfully Updated');
+    res.redirect('/admin/dashboard');
+  }
   
 });
 

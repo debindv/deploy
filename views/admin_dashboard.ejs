@@ -29,17 +29,17 @@
       
     </div>
   </nav>
-
 <div class="container-fluid" >
 
     <div class="row">
       <div class="col-sm-4 text-white bg-primary">
+      </br>
         <h3 class="text-center font-weight-normal">Contract Address</h3>
         <div class="container">
-          <% include ./messages %>
+        </br>
           <form action="/admin/address" method="post">
             <div class="form-group">
-              <label for="email">Enter contract address:</label>
+              <label for="email">Enter contract address:*</label>
               <input type="text" class="form-control" name="address" placeholder="Eg: 0x74d2C209EB805411315BC025bF0f1d596c2a6b78" id="address">
             </div>
             <button type="submit"  class="btn btn-light">Submit</button>
@@ -48,14 +48,16 @@
           
       </div>
       <div class="col-sm-4 text-white bg-warning">
-        <h3 class="text-center font-weight-normal">Coinbase</h3>
+      </br>
+        <h3 class="text-center font-weight-normal">Coinbase Updation</h3>
         <div class="container">
-          <% include ./messages %>
+        </br>
           <form action="/admin/coinbase" method="post">
             <div class="form-group">
-              <label for="email">Enter coinbase address:</label>
+              <label for="email">Enter coinbase address:*</label>
               <input type="text" class="form-control" name="coinbase" placeholder="Eg: 0x40f4DE94adE960620c00474C12752a5fA49CB78b" id="coinbase">
-              <label for="email">Enter Private Key:</label>
+            </br>
+              <label for="email">Enter Private Key:*</label>
               <input type="text" class="form-control" name="privatekey" placeholder="Eg: 0x23eb4fcdaf0e777d818e96f8e1ffea034dfd881f24ed745db52b" id="privatekey">
             </div>
             <button type="submit"  class="btn btn-light">Submit</button>
@@ -65,15 +67,19 @@
         
       </div>
       <div class="col-sm-4 text-white bg-danger">
+      </br>
         <h3 class="text-center font-weight-normal">Voters List</h3>
+    </br>
         <div class="container">
           <h5>No. of people who voted = <%=vcount%></h5>
         <h5>Total no. of people = <%=ucount%></h5>
+      </br>
+    </br>
         <a type="button" class="btn btn-light" href="/admin/votedList"> See the complete list </a>
         </div>
       </div>
     </div>
-
+    <% include ./messages %>  
 </br>
       <div class="col-sm-12 text-white bg-secondary">
       </br>
