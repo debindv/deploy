@@ -7,17 +7,17 @@ const AadharSchema = new mongoose.Schema({
     required: true
   },
   ano1:{
-      type: String,
+      type: Number,
       required: true
   },
   email1: {
     type: String,
     required: true
   },
-  password1: {
-    type: String,
-    required: true
-  }
+  // password1: {
+  //   type: String,
+  //   required: true
+  // }
 });
 
 const Aadhar = mongoose.model('Aadhar_details', AadharSchema);

@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const hasVoted = require('../models/hasVoted');
 const Email = require('../models/Email');
+const Aadhar = require('../models/Aadhar');
 require('../config/passport')(passport); 
 var Web3 = require("web3");
 const HDwalletProvider = require('@truffle/hdwallet-provider');
@@ -31,7 +32,7 @@ router.post('/login',(req, res) => {
    
     admin.findOne({emailID:emailID}).then(user => {
         if(user){
-          console.log(user.password);
+           console.log(user.password);
            if(user.password == password){
              res.redirect('/admin/dashboard');
            } else {
@@ -78,36 +79,83 @@ router.get('/votedList', (req,res) => {
 });
 });
 
+//Aadhar Updation
+router.get('/register', (req,res) => {
+  res.render('register_aadhar');
+});
+
+router.post('/register', (req,res) => {
+  let errors = [];
+  var { name,ano, email } = req.body;
+  //console.log(`NAME: ${name}, ANO: ${ano},EMAIL: ${email}`);
+  email = email.toLowerCase();
+  if (!name || !email || ano ) {
+    errors.push({ msg: 'Please enter all fields' });
+  }
+  User.findOne({ email: email }).then(user => {
+    if (user) {
+      errors.push({ msg: 'Email already exists' });
+      res.render('register_aadhar', {
+        errors,
+        name,
+        email,
+        ano
+      });
+    } else {
+      new Aadhar({
+        name1 : name,
+        ano1 : ano,
+        email1 : email
+       }).save(() => {
+          console.log('Added Transaction hash to Collection');
+          res.redirect('/admin/dashboard');
+        }).catch((error) => {
+          console.log(error);
+        });
+      }
+  })
+});
+
 //Contract address
 router.post('/address', (req,res) => {
   var addr = req.body.address;
   addr = addr.trim();
-  contractAddress = addr;
-  console.log(`address = ${addr}`);
-  const contractAbi = require('./../contracts/contractAbi');
+  let errors = [];
+  if (!addr) {
+    errors.push({ msg: 'Please enter all fields' });
+    res.render('admin_dashboard', {
+      errors
+    });
+  }
+  else {
+    contractAddress = addr;
+    console.log(`address = ${addr}`);
+    const contractAbi = require('./../contracts/contractAbi');
 
-  Election = new web3.eth.Contract(
-    contractAbi, contractAddress
-  );
-  console.log('Contract UPDATED')
-  Email.deleteMany({}, () => console.log('Verification table cleared'));
-  hasVoted.deleteMany({}, () => console.log('Has Voted Table cleared'));
-  res.redirect('/admin/dashboard');
+    Election = new web3.eth.Contract(
+      contractAbi, contractAddress
+    );
+    console.log('Contract UPDATED')
+    Email.deleteMany({}, () => console.log('Verification table cleared'));
+    hasVoted.deleteMany({}, () => console.log('Has Voted Table cleared'));
+    res.redirect('/admin/dashboard');
+  }
 });
 
 
 //Coinbase
 router.post('/coinbase', (req,res) => {
   coinbase = req.body.coinbase;
-  privateKey = req.body.privatekey;
+  privatekey = req.body.privatekey;
+  
   const provider = new HDwalletProvider(
     privateKey,
     'https://ropsten.infura.io/v3/24b49cc800a04404ae669233b6931097'
   );
   web3 = new Web3(provider);
-  console.log(`coinbase = ${coinbase}`);
-  console.log(`PVT KEY = ${privateKey}`);
+  
   res.redirect('/admin/dashboard');
+  
 });
 
 

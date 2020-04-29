@@ -36,6 +36,7 @@
       <div class="col-sm-4 text-white bg-primary">
         <h3 class="text-center font-weight-normal">Contract Address</h3>
         <div class="container">
+          <% include ./messages %>
           <form action="/admin/address" method="post">
             <div class="form-group">
               <label for="email">Enter contract address:</label>
@@ -49,6 +50,7 @@
       <div class="col-sm-4 text-white bg-warning">
         <h3 class="text-center font-weight-normal">Coinbase</h3>
         <div class="container">
+          <% include ./messages %>
           <form action="/admin/coinbase" method="post">
             <div class="form-group">
               <label for="email">Enter coinbase address:</label>
@@ -58,6 +60,7 @@
             </div>
             <button type="submit"  class="btn btn-light">Submit</button>
           </form>
+        </br>
         </div>
         
       </div>
@@ -71,13 +74,35 @@
       </div>
     </div>
 
-</div>
+</br>
+      <div class="col-sm-12 text-white bg-secondary">
+      </br>
+        <h3 class="text-center font-weight-normal">Register in Aadhar database</h3>
+        <div class="text-center">
+            <a type="button" class="btn btn-light" href="/admin/register">Register</a>
+        </div>
+      </br>
+      </div>
+    </div>
+
+
 
 
 
     
 
 </body>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
 <footer><p class="display-3 text-center" style="font-size:1vw">© Copyright 2020 </br>Team Blockbusters</p>
   <p class="display-3 text-center" style="font-size:1vw">. ASHER . DEBIN . JOAN . UDAY .</p>
 </footer>
