@@ -112,30 +112,34 @@ router.post('/register', (req,res) => {
         ano
       });
     }
-  });
-  Aadhar.findOne({ano: ano}).then(user => {
-    if(user) {
-      errors.push({ msg: 'Aadhar number already exists' });
-      res.render('register_aadhar', {
-        errors,
-        name,
-        email,
-        ano
-      });
-    }
     else {
-      new Aadhar({
-        name1 : name,
-        ano1 : ano,
-        email1 : email
-       }).save(() => {
-          console.log('Added aadhar details to Collection');
-          res.redirect('/admin/dashboard');
-        }).catch((error) => {
-          console.log(error);
+      Aadhar.findOne({ano: ano}).then(user => {
+        if(user) {
+          errors.push({ msg: 'Aadhar number already exists' });
+          res.render('register_aadhar', {
+            errors,
+            name,
+            email,
+            ano
+          });
+        }
+        else {
+          new Aadhar({
+            name1 : name,
+            ano1 : ano,
+            email1 : email
+           }).save(() => {
+              req.flash('success_msg', 'Successfully Added to Aadhar collection');
+              console.log('Added aadhar details to Collection');
+              res.redirect('/admin/dashboard');
+            });
+            
+          }
         });
-      }
-    });
+    }
+  }).catch((error) => {
+    console.log(error);
+  });
 }
 });
 
@@ -159,7 +163,7 @@ router.post('/address', (req,res) => {
     // console.log('Contract UPDATED')
     // Email.deleteMany({}, () => console.log('Verification table cleared'));
     // hasVoted.deleteMany({}, () => console.log('Has Voted Table cleared'));
-    // console.log("SUCCESS IN CONTR");
+    req.flash('success_msg', 'Successfully Updated');
     res.redirect('/admin/dashboard');
   }
 });
@@ -175,12 +179,13 @@ router.post('/coinbase', (req,res) => {
     res.redirect('/admin/dashboard');
   }
   else {
-    const provider = new HDwalletProvider(
-      privateKey,
-      'https://ropsten.infura.io/v3/24b49cc800a04404ae669233b6931097'
-    );
-    web3 = new Web3(provider);
-    console.log("SUCCESS IN COIN");
+    // const provider = new HDwalletProvider(
+    //   privateKey,
+    //   'https://ropsten.infura.io/v3/24b49cc800a04404ae669233b6931097'
+    // );
+    // web3 = new Web3(provider);
+    // console.log("SUCCESS IN COIN");
+    req.flash('success_msg', 'Successfully Updated');
     res.redirect('/admin/dashboard');
   }
   

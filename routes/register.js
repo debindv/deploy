@@ -47,7 +47,6 @@ router.post('/', (req, res) => {
           password2
         });
       } else {
-        console.log(`ANO: ${ano}, NAme: ${name}, EMail : ${email}`);
         Aadhar.findOne({ ano1: ano, name1:name, email1:email }).then(user => {
           if (user) {
             const newUser = new User({
@@ -60,7 +59,10 @@ router.post('/', (req, res) => {
               bcrypt.hash(newUser.password, salt, (err, hash) => {
                 if (err) throw err;
                 newUser.password = hash;
-                newUser.save().then( () => {res.redirect('/login');}).catch(err => console.log(err));
+                newUser.save().then( () => {
+                  req.flash('success_msg', 'Successfully Registered');
+                  res.redirect('/login');
+                }).catch(err => console.log(err));
               });
             });
           }  
