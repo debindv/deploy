@@ -167,6 +167,8 @@ router.post('/coinbase', (req,res) => {
     res.redirect('/admin/dashboard');
   }
   else {
+    coinbase = coin;
+    privateKey = key;
     const provider = new HDwalletProvider(
       privateKey,
       'https://ropsten.infura.io/v3/24b49cc800a04404ae669233b6931097'
@@ -176,7 +178,6 @@ router.post('/coinbase', (req,res) => {
     req.flash('success_msg', 'Successfully Updated');
     res.redirect('/admin/dashboard');
   }
-  
 });
 
 
