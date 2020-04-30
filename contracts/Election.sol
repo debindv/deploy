@@ -19,8 +19,8 @@ contract Election {
     string public candidate;
     //constructor
     constructor () public {
-        addCandidate("Sandra Ann Sajan");
-        addCandidate("Udaya Shanker M");
+        // addCandidate("Sandra Ann Sajan");
+        // addCandidate("Udaya Shanker M");
         addCandidate("NOTA");
     }
     function getCandidate (uint _candidateId) public view returns (uint _id, string memory _name, uint _voteCount) {
@@ -28,7 +28,7 @@ contract Election {
         _name = candidates[_candidateId].name;
         _voteCount = candidates[_candidateId].voteCount;
     }
-    function addCandidate (string memory _name) private { // private because not too be accessible by public interface of contract
+    function addCandidate (string memory _name) public { // private because not too be accessible by public interface of contract
         candidatesCount ++;
         candidates[candidatesCount] = Candidate({id: candidatesCount, name: _name, voteCount:0} );
     }

@@ -34,11 +34,13 @@
     <div class="row">
       <div class="col-sm-4 text-white bg-primary">
       </br>
-        <h3 class="text-center font-weight-normal">Contract Address</h3>
+        <h3 class="text-center font-weight-normal">Add Candidate</h3>
         <div class="container">
         </br>
           <form action="/admin/address" method="post">
             <div class="form-group">
+              <label for="email">Name of the Candidate:*</label>
+              <input type="text" class="form-control" name="cname" placeholder="Candidate Name" id="cname">
               <label for="email">Enter contract address:*</label>
               <input type="text" class="form-control" name="address" placeholder="Eg: 0x74d2C209EB805411315BC025bF0f1d596c2a6b78" id="address">
             </div>
@@ -54,10 +56,13 @@
         </br>
           <form action="/admin/coinbase" method="post">
             <div class="form-group">
-              <label for="email">Enter coinbase address:*</label>
+              <label for="email">Enter current coinbase address:*</label>
+              <input type="text" class="form-control" name="ccoinbase" placeholder="Eg: 0x40f4DE94adE960620c00474C12752a5fA49CB78b" id="ccoinbase">
+              <label for="email">Enter current Private Key:*</label>
+              <input type="text" class="form-control" name="cprivatekey" placeholder="Eg: 0x23eb4fcdaf0e777d818e96f8e1ffea034dfd881f24ed745db52b" id="cprivatekey">
+              <label for="email">Enter new coinbase address:*</label>
               <input type="text" class="form-control" name="coinbase" placeholder="Eg: 0x40f4DE94adE960620c00474C12752a5fA49CB78b" id="coinbase">
-            </br>
-              <label for="email">Enter Private Key:*</label>
+              <label for="email">Enter new Private Key:*</label>
               <input type="text" class="form-control" name="privatekey" placeholder="Eg: 0x23eb4fcdaf0e777d818e96f8e1ffea034dfd881f24ed745db52b" id="privatekey">
             </div>
             <button type="submit"  class="btn btn-light">Submit</button>
