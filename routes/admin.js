@@ -11,6 +11,8 @@ require('../config/passport')(passport);
 var Web3 = require("web3");
 const HDwalletProvider = require('@truffle/hdwallet-provider');
 let errors = [];
+
+
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
       return next();
@@ -29,19 +31,6 @@ router.get('/login', (req,res) => res.render('adminLogin'));
 router.post('/login',(req, res, next) => {
 
     const {emailID,password} = req.body;
-   
-  //   admin.findOne({emailID:emailID}).then(user => {
-  //       if(user){
-  //          console.log(user.password);
-  //          if(user.password == password){
-  //            res.redirect('/admin/dashboard');
-  //          } else {
-  //            res.send('Passwords do not match');
-  //          }
-  //       }
-  //       else
-  //           console.log('user not found');
-  //  });
 
    passport.authenticate('admin-local',{
        successRedirect: '/admin/dashboard',
@@ -52,9 +41,9 @@ router.post('/login',(req, res, next) => {
 
   });
 
-
-  var ucount = 0;
-  var vcount = 0;
+//Variables for voter turnout data
+var ucount = 0;
+var vcount = 0;
 
   
 //Admin Dashboard
@@ -72,7 +61,7 @@ router.get('/dashboard', ensureAuthenticated, (req,res) => {
 });
 
 //Voted List
-router.get('/votedList', (req,res) => {
+router.get('/votedList',ensureAuthenticated, (req,res) => {
   hasVoted.find( {}, (err, data) => {
     if (err) throw err;
     else {
@@ -82,7 +71,7 @@ router.get('/votedList', (req,res) => {
 });
 
 //Aadhar Updation
-router.get('/register', (req,res) => {
+router.get('/register', ensureAuthenticated, (req,res) => {
   res.render('register_aadhar');
 });
 
