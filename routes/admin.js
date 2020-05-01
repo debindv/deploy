@@ -135,25 +135,28 @@ router.post('/register', (req,res) => {
 //Contract address
 router.post('/address', (req,res) => {
   var addr = req.body.address;
+  var cname = req.body.cname;
   addr = addr.trim();
   errors = [];
-  if (!addr) {
+  if (!addr || !cname) {
     errors.push({ msg: 'Please enter all fields' });
     res.redirect('/admin/dashboard');
   }
-  else {
-    contractAddress = addr;
-    console.log(`address = ${addr}`);
-    const contractAbi = require('./../contracts/contractAbi');
-
-    Election = new web3.eth.Contract(
-      contractAbi, contractAddress
-    );
-    console.log('Contract UPDATED')
-    Email.deleteMany({}, () => console.log('Verification table cleared'));
-    hasVoted.deleteMany({}, () => console.log('Has Voted Table cleared'));
-    req.flash('success_msg', 'Successfully Updated');
+  else if( addr != contractAddress ){
+    errors.push({ msg: 'Verification of contract Address failed' });
     res.redirect('/admin/dashboard');
+  }
+  else {
+    Election.methods.addCandidate(cname)
+    .send({ from: coinbase, gas:6000000, gasPrice: web3.utils.toWei('0.00000009', 'ether')}).then((reciept) => {
+      console.log(reciept);
+      //RENDER THE SUCESS PAGE
+      req.flash('success_msg', `Successfully Added ${cname} as a Candidate`);
+      res.redirect('/admin/dashboard');
+    })
+    // Email.deleteMany({}, () => console.log('Verification table cleared'));
+    // hasVoted.deleteMany({}, () => console.log('Has Voted Table cleared'));
+
   }
 });
 
@@ -162,20 +165,18 @@ router.post('/address', (req,res) => {
 router.post('/coinbase', (req,res) => {
   var coin = req.body.coinbase;
   var key = req.body.privatekey;
+  var ccoin = req.body.ccoinbase;
+  var ckey = req.body.cprivatekey;
   errors = []
-  if (!coin || !key) {
+  if (!coin || !key ) {
     errors.push({ msg: 'Please enter all fields' });
     res.redirect('/admin/dashboard');
   }
+  else if (ccoin != coinbase || ckey!= privateKey){
+    errors.push({ msg: 'Credentials do not match'});
+    res.redirect('/admin/dashboard');
+  }
   else {
-    coinbase = coin;
-    privateKey = key;
-    const provider = new HDwalletProvider(
-      privateKey,
-      'https://ropsten.infura.io/v3/24b49cc800a04404ae669233b6931097'
-    );
-    web3 = new Web3(provider);
-    console.log("SUCCESS IN COIN");
     req.flash('success_msg', 'Successfully Updated');
     res.redirect('/admin/dashboard');
   }
