@@ -80,6 +80,7 @@ router.post('/register', (req,res) => {
   var { name,ano, email } = req.body;
   //console.log(`NAME: ${name}, ANO: ${ano},EMAIL: ${email}`);
   email = email.toLowerCase();
+  name  = name.toLowerCase();
   if (!name || !email || !ano ) {
     errors.push({ msg: 'Please enter all fields' });
     res.render('register_aadhar', {

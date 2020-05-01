@@ -13,6 +13,7 @@ router.get('/' ,(req,res) => res.render('register'));
 router.post('/', (req, res) => {
   var { name,ano, email, password, password2 } = req.body;
   email = email.toLowerCase();
+  name  = name.toLowerCase();
   let errors = [];
 
   if (!name || !email || !password || !password2) {
