@@ -44,15 +44,18 @@ router.post('/login',(req, res, next) => {
 //Variables for voter turnout data
 var ucount = 0;
 var vcount = 0;
+let balance;
 
   
 //Admin Dashboard
 router.get('/dashboard', ensureAuthenticated, (req,res) => {
   User.countDocuments()
-    .then((no) => ucount = no)
+    .then((no) => ucount = no)                  //Count Documents
       .then(() => hasVoted.countDocuments())
         .then((no) => vcount = no)
-            .then(() => res.render('admin_dashboard', {ucount:ucount, vcount:vcount, errors}))
+          .then(web3.eth.getBalance(coinbase)       //Give Balance of ethereum account
+            .then((bal) => {balance = bal})
+              .then(() => res.render('admin_dashboard', {ucount:ucount, vcount:vcount, errors, balance:balance})))
             
   
   // console.log(`ucount = ${ucount}`);
@@ -130,6 +133,11 @@ router.post('/register', (req,res) => {
     console.log(error);
   });
 }
+});
+
+//Download Transaction reciept
+router.get('/downloadFile', ensureAuthenticated, (req,res) => {
+  res.download(`./transactionreciepts/AllTransaction.txt`);
 });
 
 //Contract address

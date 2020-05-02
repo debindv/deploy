@@ -10,7 +10,7 @@ const truffleConfig = require('./truffle-config.js');
 const hasVoted = require('./models/hasVoted');
 const admin = require('./models/admin');
 const bcrypt = require('bcryptjs');
-
+const fs = require('fs');
 coinbase = '0x40f4DE94adE960620c00474C12752a5fA49CB78b';
 privateKey = '0x23eb4fcdaf0e777d818e96f8e1ffea034dfd881f24ed745db52b5f4c86a3b765';
 //coinbase = '0x40f4DE94adE960620c00474C12752a5fA49CB78b';
@@ -60,6 +60,9 @@ mongoose
   )
   .then(() => {
     console.log('MongoDB Connected');
+    fs.writeFile('./transactionreciepts/AllTransaction.txt', `ELECTION CONDUCTED ON ${new Date()}\n\n`,(err) => {
+      if(err) throw err;
+    })
     // Email.deleteMany({}, () => console.log('Verification table cleared'));
     // hasVoted.deleteMany({}, () => console.log('Has Voted Table cleared'));
   })

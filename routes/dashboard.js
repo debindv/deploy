@@ -6,6 +6,7 @@ const Email = require('../models/Email');
 const login = require('./login');
 const voted = require('../models/hasVoted');
 let hash=[];
+const fs = require('fs');
 // To ensure authentication
 
 function ensureAuthenticated(req, res, next) {
@@ -24,7 +25,11 @@ function ensureAuthenticated(req, res, next) {
   var cname = [];
   var counter = 0;
  
-
+router.get('/downloadFile', ensureAuthenticated, (req,res) => {
+  mailId = login.email;
+  var mailHash = crypto.createHash('sha256').update(mailId).digest('hex');
+  res.download(`./transactionreciepts/Transaction${hash[mailHash]}.txt`);
+});
  
  
 router.get('/', ensureAuthenticated, (req,res) => {
@@ -81,6 +86,12 @@ router.post('/', function(req, res, next) {
       transactionHash = reciept.transactionHash;
       hash[mailHash]=transactionHash;
       console.log(reciept);
+      fs.appendFile('./transactionreciepts/AllTransaction.txt', `\n`+JSON.stringify(reciept)+`\n`, 'utf-8',(err) => {
+        if(err) throw err;
+      })
+      fs.writeFile(`./transactionreciepts/Transaction${transactionHash}.txt`, JSON.stringify(reciept), 'utf-8',(err) => {
+        if(err) throw err;
+      })
 
       //RENDER THE SUCESS PAGE
       res.render('success', {mailHash:reciept.transactionHash});
