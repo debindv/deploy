@@ -54,16 +54,17 @@ router.get('/:token', function(req, res) {
                 req.flash('success_msg', 'Successfully Updated');
                 console.log('Sucess');
                     var smtpTransport = nodemailer.createTransport({
-                      service: 'SendGrid',
+                      service: 'gmail',
+                      host: 'smtp.gmail.com',
                       auth: {
-                        user: 'teamblockbusters',
+                        user: 'teamblockbusterinc@gmail.com',
                         pass: 'evoting123'
                       }
                     });
                     var mailOptions = {
                       to: user.email,
-                      from: 'debinptpm@gmail.com',
-                      subject: 'Your De-mocracy Application password has been changed',
+                      from: 'teamblockbusterinc@gmail.com',
+                      subject: 'Your De-mocracy Account password has been changed',
                       text: 'Hello,\n\n' +
                         'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n\nTeam Blockbusters\n'
                     };

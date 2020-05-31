@@ -5,6 +5,7 @@ const User = require('../models/User');
 const Aadhar = require('../models/Aadhar');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 
 //router.get('/', (req,res) => res.sendFile(path.join(__dirname,'../front-end','register.html')));
@@ -73,15 +74,19 @@ router.post('/', (req, res) => {
                 newUser.password = hash;
 
                 //Generate random no for email verification
-                rand=Math.floor((Math.random() * 12342545) + 47189194743);
-                link="localhost:3000/login/"+rand;
-                const mailOptions={
-                  from : 'teamblockbusterinc@gmail.com',
-                  to : email,
-                  subject : "Please confirm your Email account",
-                  html : 'Hello,<br> Please Click on the link to verify your email.<br> <a href="'+link+'">Email verification link</a> <br> Go to that link to confirm your id <br><br>'+link
-                };  
                 
+                var token = crypto.randomBytes(20).toString('hex');
+
+                const mailOptions={
+                from : 'teamblockbusterinc@gmail.com',
+                to : email,
+                subject : "De-Mocracy : Please confirm your Email account",
+                text : 'Hello,\n Please Click on the link to verify your email.'+ '\n\n'+'http://' + req.headers.host + '/login/' + token + '\n' +
+                'This Link will expire in 1 hour\n\n' +
+                'Team Blockbusters\n'
+                };  
+              
+         
                  //Send email
                  smtpTransport.sendMail(mailOptions, (error, response) => {
                   if(error){
@@ -90,7 +95,8 @@ router.post('/', (req, res) => {
                           res.redirect('/registration');
                   }else{
                           console.log("EMAIL sent");
-                          newUser.token = rand;
+                          newUser.emailVerificationToken = token;
+                          newUser.emailTokenExpiry = Date.now() + 3600000;
                           newUser.save().then( () => {
                             req.flash('success_msg', 'Please check your email to verify your Email ID and confirm registration');
                             res.redirect('/login');

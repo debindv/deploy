@@ -34,6 +34,9 @@ module.exports = function(passport) {
             return done(null, false,{ message: 'Email not verified' });
           }
           if (isMatch) {
+            user.emailVerificationToken = undefined; 
+            user.emailTokenExpiry = undefined;
+            user.save();
             return done(null, user);
           } else {
             return done(null, false,{ message: 'Incorrect login credentials' });

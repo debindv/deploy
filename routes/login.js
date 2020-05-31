@@ -10,10 +10,10 @@ router.get('/', (req,res) => res.render('login'));
 
 router.get('/:id', (req,res) => {
   var token = req.params.id;
-  User.findOne({token:token}).then((user) => {
+  User.findOne({emailVerificationToken:token, emailTokenExpiry: { $gt: Date.now() }}).then((user) => {
     user.verified = 'true';
     user.save().then(() => {
-      console.log(`user email verified status: ${user.verified}`);
+      
       req.flash('success_msg','Email ID has been verified');
       res.render('login');
     }).catch((err) => console.log(err));
