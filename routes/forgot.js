@@ -46,7 +46,7 @@ router.post('/', function(req, res, next) {
           }
         });
         var mailOptions = {
-          from: 'debinptpm@gmail.com',
+          from: 'Team Blockbusters <debinptpm@gmail.com>',
           to: user.email,
           subject: 'De-mocracy Password Reset',
           text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
@@ -58,7 +58,7 @@ router.post('/', function(req, res, next) {
         };
         smtpTransport.sendMail(mailOptions, function(err) {
           if(err) throw err
-          req.flash('error', 'An e-mail has been sent to '+ user.email + ' with further instructions.\nCheck Spam folder also. Link will expire in 1 Hour.');
+          req.flash('success_msg', 'An e-mail has been sent to '+ user.email + ' with further instructions.\nCheck Spam folder also. Link will expire in 1 Hour.');
           res.redirect('/login');
           done(err, 'done');
         });
