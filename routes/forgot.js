@@ -52,12 +52,14 @@ router.post('/', function(req, res, next) {
           text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
           'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-          'If you did not request this, please ignore this email and your password will remain unchanged.\n\nTeam Blockbusters\n'
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n'+
+          'This Link will expires in 1 hour\n\n' +
+          'Team Blockbusters\n'
         };
         smtpTransport.sendMail(mailOptions, function(err) {
           if(err) throw err
-          req.flash('error', 'An e-mail has been sent to '+ user.email + ' with further instructions.\nCheck Spam folder also');
-          res.redirect('/forgot');
+          req.flash('error', 'An e-mail has been sent to '+ user.email + ' with further instructions.\nCheck Spam folder also. Link will expire in 1 Hour.');
+          res.redirect('/login');
           done(err, 'done');
         });
       }
