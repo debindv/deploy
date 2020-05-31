@@ -68,9 +68,9 @@ mongoose
   )
   .then(() => {
     console.log('MongoDB Connected');
-    // fs.writeFile('./transactionreciepts/AllTransaction.txt', `ELECTION CONDUCTED ON ${new Date()}\n\n`,(err) => {
-    //   if(err) throw err;
-    // })
+    fs.writeFile('./transactionreciepts/AllTransaction.txt', `ELECTION CONDUCTED ON ${new Date()}\n\n`,(err) => {
+      if(err) throw err;
+    })
     // Email.deleteMany({}, () => console.log('Verification table cleared'));
     // hasVoted.deleteMany({}, () => console.log('Has Voted Table cleared'));
     // Aadhar.deleteMany({}, () => console.log('Aadhar Table cleared'));
@@ -122,7 +122,8 @@ app.use('/dashboard', require('./routes/dashboard'));
 app.use('/result', require('./routes/result'));
 app.use('/logout', require('./routes/logout'));
 app.use('/verification', require('./routes/verification'));
-
+app.use('/forgot',require('./routes/forgot'));
+app.use('/reset',require('./routes/reset'));
 app.use('/admin', require('./routes/admin'));
 
 module.exports = app;

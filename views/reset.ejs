@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <title>Login</title>
+    <title>Reset</title>
   </head>
 
   <body style="background-image: url('https://www.solidbackgrounds.com/images/1920x1080/1920x1080-light-steel-blue-solid-color-background.jpg');">
@@ -24,8 +24,8 @@
           <li class="nav-item">
             <a class="nav-link" href="/">Home</a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="/login">Login<span class="sr-only">(current)</span></a>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/result">Result</a>
@@ -46,33 +46,35 @@
     <div class="row mt-5">
         <div class="col-md-6 m-auto">
           <div class="card card-body">
-            <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>  Login</h1>
+            <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>Reset Password</h1>
             <% include ./messages %>
-            <form action="/login" method="POST">
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  class="form-control"
-                  placeholder="Enter Email"
-                />
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  class="form-control"
-                  placeholder="Enter Password"
-                />
-              </div>
-              <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <form action="/reset" method="POST">
+                <div class="form-group">
+                    <label for="password">New Password</label>
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      class="form-control"
+                      placeholder="Create Password"
+                      value="<%= typeof password != 'undefined' ? password : '' %>"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="password2">Confirm Password</label>
+                    <input
+                      type="password"
+                      id="password2"
+                      name="password2"
+                      class="form-control"
+                      placeholder="Confirm Password"
+                      value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
+                    />
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-block">
+                    Update Password
+                  </button>
             </form>
-            <p class="lead mt-4">
-              No Account? <a href="/register">Register</a></br>Forgot Password? <a href="/forgot">Reset Password</a></p>
           </div>
         </div>
       </div>
