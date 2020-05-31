@@ -78,7 +78,7 @@ router.post('/', (req, res) => {
                 var token = crypto.randomBytes(20).toString('hex');
 
                 const mailOptions={
-                from : 'teamblockbusterinc@gmail.com',
+                from : 'Team Blockbusters <teamblockbusterinc@gmail.com>',
                 to : email,
                 subject : "De-Mocracy : Please confirm your Email account",
                 text : 'Hello,\n Please Click on the link to verify your email.'+ '\n\n'+'http://' + req.headers.host + '/login/' + token + '\n' +
@@ -94,7 +94,6 @@ router.post('/', (req, res) => {
                           req.flash('error_msg', 'Registration failed');
                           res.redirect('/registration');
                   }else{
-                          console.log("EMAIL sent");
                           newUser.emailVerificationToken = token;
                           newUser.emailTokenExpiry = Date.now() + 3600000;
                           newUser.save().then( () => {

@@ -253,4 +253,44 @@ router.post('/clearhasvoted', (req,res) => {
   });
 });
 
+//REMOVE USER FROM DATABASE
+
+router.post('/removeUser', (req,res) => {
+  var mail = req.body.email;
+  if(!mail){
+    req.flash('error', 'Email field Empty');
+    res.redirect('/admin/dashboard');
+  }
+  else{
+  User.findOne({ email: mail }, function(err, user) {
+    if (err) throw err;
+    if(user){
+        User.deleteOne({ email: mail }, () => console.log('Deleted User'));
+        req.flash('success_msg', 'Succesfully Removed User');
+        res.redirect('/admin/dashboard');
+    }
+    else{
+      req.flash('error', 'No User Found');
+      res.redirect('/admin/dashboard');
+    }
+  });
+}
+  });
+
+//COMPLETE USERS LIST
+
+router.get('/completeList',ensureAuthenticated, (req,res) => {
+  User.find( {}, (err, data) => {
+    if (err) throw err;
+    else {
+        res.render('completeList',{data:data});
+    }
+});
+
+});
+
+
+
+
+
 module.exports = router;

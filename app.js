@@ -32,7 +32,6 @@ app.set('view engine','ejs');
 //     console.log(`up ${coinbase}`);
 // 	}
 // });
-
 contractAddress = "0x25169DE3749b5e95F3075df90A7968BABAe045d1";
 const contractAbi = require('./contracts/contractAbi');
 

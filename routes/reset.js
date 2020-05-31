@@ -63,7 +63,7 @@ router.get('/:token', function(req, res) {
                     });
                     var mailOptions = {
                       to: user.email,
-                      from: 'teamblockbusterinc@gmail.com',
+                      from: 'Team Blockbusters <teamblockbusterinc@gmail.com>',
                       subject: 'Your De-mocracy Account password has been changed',
                       text: 'Hello,\n\n' +
                         'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n\nTeam Blockbusters\n'

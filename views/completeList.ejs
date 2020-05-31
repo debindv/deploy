@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voted List</title>
+    <title>Registered Users</title>
     <link rel="shortcut icon" type="image/png" href="https://image.flaticon.com/icons/png/512/1533/1533878.png">
     <link href="/assets/style.css" rel="stylesheet" type="type/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -83,10 +83,9 @@
     <a type="button" class="btn btn-primary" href="/admin/dashboard"> Admin Dashboard</a>
   </div>
 </br>
-    <h1 class="display-3 text-center"style="font-size:10vw">Voted People</h1>
+    <h1 class="display-3 text-center"style="font-size:10vw">Complete Registered Users</h1>
       <br>
     </br>
-    
     <div class="row text-center">
 
         <div class="container">
@@ -98,16 +97,16 @@
             <table class="table table striped" id="myTable">
                <tr>
                    <th>No.</th>
+                   <th>Name</th>
                    <th>Mail ID</th>
-                   <!-- <th>Date and Time</th> -->
                </tr>
             <% x = 0 %>   
             <% data.forEach(function (user) { %>
                 <tr>
                      <% x+=1 %>
                      <td><%= x %></td>
+                     <td><%= user.name %></td>
                      <td><%= user.email %></td>
-                     <!-- <td><%= user.date %></td> -->
                 </tr>
          <% }) %>
            </table>
