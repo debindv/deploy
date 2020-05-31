@@ -32,6 +32,7 @@ app.set('view engine','ejs');
 //     console.log(`up ${coinbase}`);
 // 	}
 // });
+// contractAddress = '0x978841A92A077515f0742eBE691E063fb76D15FE';
 contractAddress = "0x25169DE3749b5e95F3075df90A7968BABAe045d1";
 const contractAbi = require('./contracts/contractAbi');
 
@@ -110,7 +111,6 @@ app.use(function(req, res, next) {
 app.use(express.static('front-end'));
 
 // Routes
-
 app.use('/register', require('./routes/register'));
 app.use('/login', require('./routes/login'));
 app.use('/dashboard', require('./routes/dashboard'));
@@ -122,5 +122,3 @@ app.use('/reset',require('./routes/reset'));
 app.use('/admin', require('./routes/admin'));
 
 module.exports = app;
-
-

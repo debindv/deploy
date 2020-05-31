@@ -66,16 +66,19 @@ router.get('/', ensureAuthenticated, (req,res) => {
       }
       else {
         var tHash;
-        console.log(mailHash);
         //db.Email.find({ mHash:mailHash})
         Email.findOne({ mHash:mailHash }).then(user => {
           if(user){
             tHash=user.transactionHash;
-            res.render('voted', {mailHash:tHash});   
+            res.render('voted', {mailHash:tHash});    //IF ALREADY VOTED REDIRECTS TO VOTED.EJS PAGE
+          }
+          else{
+            req.flash('error','Transaction Hash Missing');
+            res.redirect('/login');
           }
         });
         //res.render('voted', {mailHash:hash[mailHash]});
-                                         //IF ALREADY VOTED REDIRECTS TO VOTED.EJS PAGE
+                                        
       }
     });
 });  
@@ -105,11 +108,11 @@ router.post('/', function(req, res, next) {
       //RENDER THE SUCESS PAGE
       res.render('success', {mailHash:reciept.transactionHash});
     }).then( () => {
-      d = new Date();
+      //d = new Date();
       //Adding the voter to voted collection
       new voted({
         email: mailId,
-        date : d
+       // date : d
       }).save((err, doc) => {
         if (err) throw err;
         else console.log("Added MailID to VOTED list");
