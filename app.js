@@ -77,9 +77,6 @@ mongoose
   .catch(err => console.log(err));
 
 
-  //
-
-
 // Express body parser
 app.use(express.urlencoded({ extended: true }));
 
