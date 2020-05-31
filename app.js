@@ -71,8 +71,7 @@ mongoose
     fs.writeFile('./transactionreciepts/AllTransaction.txt', `ELECTION CONDUCTED ON ${new Date()}\n\n`,(err) => {
       if(err) throw err;
     })
-    // Email.deleteMany({}, () => console.log('Verification table cleared'));
-    // hasVoted.deleteMany({}, () => console.log('Has Voted Table cleared'));
+
     // Aadhar.deleteMany({}, () => console.log('Aadhar Table cleared'));
     // User.deleteMany({}, () => console.log('User table cleared'));
   })

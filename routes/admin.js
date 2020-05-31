@@ -11,7 +11,7 @@ require('../config/passport')(passport);
 var Web3 = require("web3");
 const HDwalletProvider = require('@truffle/hdwallet-provider');
 let errors = [];
-
+let email;
 
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -30,7 +30,7 @@ router.get('/login', (req,res) => res.render('adminLogin'));
 
 router.post('/login',(req, res, next) => {
 
-    const {emailID,password} = req.body;
+    email = req.body.emailID;
 
    passport.authenticate('admin-local',{
        successRedirect: '/admin/dashboard',
@@ -162,9 +162,7 @@ router.post('/address', (req,res) => {
       req.flash('success_msg', `Successfully Added ${cname} as a Candidate`);
       res.redirect('/admin/dashboard');
     })
-    // Email.deleteMany({}, () => console.log('Verification table cleared'));
-    // hasVoted.deleteMany({}, () => console.log('Has Voted Table cleared'));
-
+    
   }
 });
 
@@ -190,6 +188,69 @@ router.post('/coinbase', (req,res) => {
   }
 });
 
+//CLEAR DATABASE
+router.get('/clearverify',ensureAuthenticated, (req,res) => {
+  res.render('confirmdbaction',{db:'clearverify'});
+});
 
+router.post('/clearverify', (req,res) => {
+  let password = req.body.password;
+  admin.findOne({ emailID: email }, function(err, user) {
+    if (err) throw err;
+    if(user){
+      // Match password
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+        if (err) throw err;
+        if (isMatch) {
+          //Email.deleteMany({}, () => console.log('Verification table cleared'));
+          req.flash('success_msg', 'Succesfully Cleared Verification Database');
+          res.redirect('/admin/dashboard');
+        } else {
+          req.flash('error', 'Incorrect Password');
+          res.redirect('/admin/dashboard');
+        }
+      });
+      
+    }
+    else{
+      req.flash('error', 'User Not Found');
+      res.redirect('/admin/login');
+    }
+    
+  });
+  
+  
+  
+});
+
+router.get('/clearhasvoted',ensureAuthenticated, (req,res) => {
+  res.render('confirmdbaction',{db:'clearhasvoted'});
+});
+
+router.post('/clearhasvoted', (req,res) => {
+  var password = req.body.password;
+  admin.findOne({ emailID: email }, function(err, user) {
+    if (err) throw err;
+    if(user){
+        // Match password
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+          if (err) throw err;
+          if (isMatch) {
+            //hasVoted.deleteMany({}, () => console.log('Has Voted Table cleared'));
+            req.flash('success_msg', 'Succesfully Cleared Verification Database');
+            res.redirect('/admin/dashboard');
+          } else {
+            req.flash('error', 'Incorrect Password');
+            res.redirect('/admin/dashboard');
+          }
+        });
+    }
+    else{
+      req.flash('error', 'User Not Found');
+      res.redirect('/admin/login');
+    }
+    
+  });
+});
 
 module.exports = router;
