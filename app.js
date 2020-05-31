@@ -12,10 +12,18 @@ const hasVoted = require('./models/hasVoted');
 const User = require('./models/User');
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
+
+
 coinbase = '0x40f4DE94adE960620c00474C12752a5fA49CB78b';
 privateKey = '0x23eb4fcdaf0e777d818e96f8e1ffea034dfd881f24ed745db52b5f4c86a3b765';
+
+
 const app = express();
+
+//Helmet for security
 app.use(helmet());
+
+//Set view engine as EJS
 app.set('view engine','ejs');
 
 // web3.eth.getCoinbase(function (err, account) {
@@ -55,7 +63,8 @@ mongoose
   .connect(
     db,
     { useNewUrlParser: true,
-      useUnifiedTopology: true }
+      useUnifiedTopology: true,
+      useFindAndModify:false }
   )
   .then(() => {
     console.log('MongoDB Connected');
