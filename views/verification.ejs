@@ -119,11 +119,13 @@
                <tr>
                    <th>Hash ID</th>
                    <th>Candidate ID</th>
+                   <th>Verification Link</th>
                </tr>
             <% data.forEach(function (user) { %>
                 <tr>
                      <td><%= user.transactionHash %></td>
                      <td><%= user.candidateid %></td>
+                     <td><a type="button" class="btn btn-info" href="https://ropsten.etherscan.io/tx/<%= user.transactionHash %>" target="_blank">Verify your Block in Blockchain Network</a></td>
                 </tr>
          <% }) %>
            </table>
