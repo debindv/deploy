@@ -68,7 +68,7 @@ mongoose
   )
   .then(() => {
     console.log('MongoDB Connected');
-    fs.access('./transactionreciepts/Transaction${tHash}.txt', fs.F_OK, (err) => {
+    fs.access('./transactionreciepts/AllTransaction.txt', fs.F_OK, (err) => {
       if (err) {
         fs.writeFile('./transactionreciepts/AllTransaction.txt', `ELECTION CONDUCTED ON ${new Date()}\n\n`,(err) => {
           if(err) throw err;
