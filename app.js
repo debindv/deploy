@@ -68,9 +68,14 @@ mongoose
   )
   .then(() => {
     console.log('MongoDB Connected');
-    fs.writeFile('./transactionreciepts/AllTransaction.txt', `ELECTION CONDUCTED ON ${new Date()}\n\n`,(err) => {
-      if(err) throw err;
-    })
+    fs.access('./transactionreciepts/Transaction${tHash}.txt', fs.F_OK, (err) => {
+      if (err) {
+        fs.writeFile('./transactionreciepts/AllTransaction.txt', `ELECTION CONDUCTED ON ${new Date()}\n\n`,(err) => {
+          if(err) throw err;
+        })
+      }
+    });
+    
 
     // Aadhar.deleteMany({}, () => console.log('Aadhar Table cleared'));
     // User.deleteMany({}, () => console.log('User table cleared'));

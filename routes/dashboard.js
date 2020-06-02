@@ -28,7 +28,22 @@ function ensureAuthenticated(req, res, next) {
 router.get('/downloadFile', ensureAuthenticated, (req,res) => {
   mailId = login.email;
   var mailHash = crypto.createHash('sha256').update(mailId).digest('hex');
-  res.download(`./transactionreciepts/Transaction${hash[mailHash]}.txt`);
+  var tHash;
+        //db.Email.find({ mHash:mailHash})
+        Email.findOne({ mHash:mailHash }).then(user => {
+          if(user){
+            tHash=user.transactionHash;
+            fs.access('./transactionreciepts/Transaction${tHash}.txt', fs.F_OK, (err) => {
+              if (err) {
+                req.flash('error','File Expired');
+                res.render('voted', {mailHash:tHash});    //IF ALREADY VOTED REDIRECTS TO VOTED.EJS PAGE
+              }
+              else{
+                res.download(`./transactionreciepts/Transaction${tHash}.txt`);
+              }
+            });
+          }
+        });    
 });
  
  
