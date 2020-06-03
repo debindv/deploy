@@ -97,7 +97,7 @@ router.post('/', (req, res) => {
                           newUser.emailVerificationToken = token;
                           newUser.emailTokenExpiry = Date.now() + 3600000;
                           newUser.save().then( () => {
-                            req.flash('success_msg', 'Please check your email to verify your Email ID and confirm registration');
+                            req.flash('success_msg', 'A mail has be been sent to ' +email+ '. Check to confirm and verify your Registration');
                             res.redirect('/login');
                           }).catch(err => console.log(err));
                         }
