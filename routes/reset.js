@@ -6,6 +6,9 @@ const User = require('../models/User');
 var async = require('async');
 var nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
+const accountSid = 'AC720dd0cea060426d8902c66068d5fe47';
+const authToken = '4ece50e174c0b670b11800dfae898d36';
+var client = require('twilio')(accountSid,authToken);
 
 let token;
 router.get('/:token', function(req, res) {
@@ -69,6 +72,11 @@ router.get('/:token', function(req, res) {
                         'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n\nTeam Blockbusters\n'
                     };
                     smtpTransport.sendMail(mailOptions, function(err) {
+                      client.messages.create({
+                        from: 'whatsapp:+14155238886',
+                        to: 'whatsapp:+91'+user.pno,
+                        body: 'Your Password has been updated successfully.\n\nTeam Blockbusters'
+                      }).then(message => console.log(message.sid));
                         req.flash('success_msg', 'Success! Your password has been changed.');
                       done(err);
                     });

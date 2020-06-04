@@ -5,7 +5,9 @@ const path = require('path');
 const User = require('../models/User');
 var async = require('async');
 var nodemailer = require('nodemailer');
-var xoauth2 = require('xoauth2');
+const accountSid = 'AC720dd0cea060426d8902c66068d5fe47';
+const authToken = '4ece50e174c0b670b11800dfae898d36';
+var client = require('twilio')(accountSid,authToken);
 
 router.get('/', function(req, res) {
     res.render('forgot', {
@@ -59,6 +61,11 @@ router.post('/', function(req, res, next) {
         };
         smtpTransport.sendMail(mailOptions, function(err) {
           if(err) throw err
+          client.messages.create({
+            from: 'whatsapp:+14155238886',
+            to: 'whatsapp:+91'+user.pno,
+            body: 'Your Password reset link has been send to '+user.email+'.\n\nTeam Blockbusters'
+          }).then(message => console.log(message.sid));
           req.flash('success_msg', 'An e-mail has been sent to '+ user.email + ' with further instructions.\nCheck Spam folder also. Link will expire in 1 Hour.');
           res.redirect('/login');
           done(err, 'done');
