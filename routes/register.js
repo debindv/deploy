@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const accountSid = 'AC720dd0cea060426d8902c66068d5fe47';
-const authToken = '4ece50e174c0b670b11800dfae898d36';
+const authToken = '2ebe506e4a218bedc537e4e1e07006a0';
 var client = require('twilio')(accountSid,authToken);
 
 
@@ -26,12 +26,12 @@ var smtpTransport = nodemailer.createTransport({
 router.get('/' ,(req,res) => res.render('register'));
 
 router.post('/', (req, res) => {
-  var { name,ano, email, pno, password, password2 } = req.body;
+  var { name,ano, email, password, password2 } = req.body;
   email = email.toLowerCase();
   name  = name.toLowerCase();
   let errors = [];
 
-  if (!name || !email || !password || !password2 || !pno) {
+  if (!name || !email || !password || !password2 ) {
     errors.push({ msg: 'Please enter all fields' });
   }
 
@@ -42,9 +42,9 @@ router.post('/', (req, res) => {
   if (password.length < 6) {
     errors.push({ msg: 'Password must be at least 6 characters' });
   }
-  if (pno.length != 10) {
-    errors.push({ msg: 'Invalid Phone Number' });
-  }
+  // if (pno.length != 10) {
+  //   errors.push({ msg: 'Invalid Phone Number' });
+  // }
   if (errors.length > 0) {
     res.render('register', {
       errors,
@@ -54,19 +54,19 @@ router.post('/', (req, res) => {
       password2
     });
   }  else {
-    User.findOne({ pno:pno }).then(user => {
-      if (user) {
-        errors.push({ msg: 'Phone Number already exists' });
-        res.render('register', {
-          errors,
-          name,
-          email,
-          pno,
-          password,
-          password2
-        });
-      }
-      else{
+    // User.findOne({ pno:pno }).then(user => {
+    //   if (user) {
+    //     errors.push({ msg: 'Phone Number already exists' });
+    //     res.render('register', {
+    //       errors,
+    //       name,
+    //       email,
+    //       pno,
+    //       password,
+    //       password2
+    //     });
+    //   }
+    //   else{
     User.findOne({ email: email }).then(user => {
       if (user) {
         errors.push({ msg: 'Email already exists' });
@@ -84,7 +84,6 @@ router.post('/', (req, res) => {
               name,
               email,
               password,
-              pno
             });
     
             bcrypt.genSalt(10, (err,salt) => {
@@ -116,11 +115,11 @@ router.post('/', (req, res) => {
                           newUser.emailVerificationToken = token;
                           newUser.emailTokenExpiry = Date.now() + 3600000;
                           newUser.save().then( () => {
-                            client.messages.create({
-                              from: 'whatsapp:+14155238886',
-                              to: 'whatsapp:+91'+pno,
-                              body: 'Dear Voter,\nYour Email verification link has been send to '+email+'.\n\nTeam Blockbusters'
-                            }).then(message => console.log(message.sid));
+                            // client.messages.create({
+                            //   from: 'whatsapp:+14155238886',
+                            //   to: 'whatsapp:+91'+pno,
+                            //   body: 'Your Email verification link has been send to '+email+'.\n\nTeam Blockbusters'
+                            // }).then(message => console.log(message.sid));
                             req.flash('success_msg', 'A mail has be been sent to ' +email+ '. Check to confirm and verify your Registration');
                             res.redirect('/login');
                           }).catch(err => console.log(err));
@@ -148,8 +147,8 @@ router.post('/', (req, res) => {
       }
 
     });
-  }
-});
+//   }
+// });
 
   }
 

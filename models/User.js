@@ -17,10 +17,10 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  pno: {
-    type: Number,
-    required: true
-  },
+  // pno: {
+  //   type: Number,
+  //   required: true
+  // },
   emailVerificationToken: String,
   emailTokenExpiry: Date,
   resetPasswordToken: String,

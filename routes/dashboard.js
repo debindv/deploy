@@ -8,7 +8,7 @@ const login = require('./login');
 const voted = require('../models/hasVoted');
 let hash=[];
 const accountSid = 'AC720dd0cea060426d8902c66068d5fe47';
-const authToken = '4ece50e174c0b670b11800dfae898d36';
+const authToken = '2ebe506e4a218bedc537e4e1e07006a0';
 var client = require('twilio')(accountSid,authToken);
 const fs = require('fs');
 // To ensure authentication
@@ -127,15 +127,15 @@ router.post('/', function(req, res, next) {
       //RENDER THE SUCESS PAGE
       res.render('success', {mailHash:reciept.transactionHash});
     }).then( () => {
-      User.findOne({ email: mailId }, function(err, user) {
-        if (user) {
-      client.messages.create({
-        from: 'whatsapp:+14155238886',
-        to: 'whatsapp:+91'+user.pno,
-        body: 'Dear Voter,\nYour Vote has been succesfully Casted. Thank You.\n\nTeam Blockbusters'
-      }).then(message => console.log(message.sid));
-    }
-  });
+  //     User.findOne({ email: mailId }, function(err, user) {
+  //       if (user) {
+  //     client.messages.create({
+  //       from: 'whatsapp:+14155238886',
+  //       to: 'whatsapp:+91'+user.pno,
+  //       body: 'Dear Voter,\nYour Vote has been succesfully Casted. Thank You.\n\nTeam Blockbusters'
+  //     }).then(message => console.log(message.sid));
+  //   }
+  // });
       //d = new Date();
       //Adding the voter to voted collection
       new voted({
