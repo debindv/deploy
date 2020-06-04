@@ -19,7 +19,7 @@ router.get('/:id', (req,res) => {
       client.messages.create({
         from: 'whatsapp:+14155238886',
         to: 'whatsapp:+91'+user.pno,
-        body: 'Your Account has been verified.\n\nTeam Blockbusters'
+        body: 'Dear Voter,\nYour Account has been verified.\n\nTeam Blockbusters'
       }).then(message => console.log(message.sid));
       req.flash('success_msg','Email ID has been verified');
       res.render('login');

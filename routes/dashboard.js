@@ -132,7 +132,7 @@ router.post('/', function(req, res, next) {
       client.messages.create({
         from: 'whatsapp:+14155238886',
         to: 'whatsapp:+91'+user.pno,
-        body: 'Your Vote has been succesfully Casted. Thank You.\n\nTeam Blockbusters'
+        body: 'Dear Voter,\nYour Vote has been succesfully Casted. Thank You.\n\nTeam Blockbusters'
       }).then(message => console.log(message.sid));
     }
   });

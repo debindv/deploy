@@ -119,7 +119,7 @@ router.post('/', (req, res) => {
                             client.messages.create({
                               from: 'whatsapp:+14155238886',
                               to: 'whatsapp:+91'+pno,
-                              body: 'Your Email verification link has been send to '+email+'.\n\nTeam Blockbusters'
+                              body: 'Dear Voter,\nYour Email verification link has been send to '+email+'.\n\nTeam Blockbusters'
                             }).then(message => console.log(message.sid));
                             req.flash('success_msg', 'A mail has be been sent to ' +email+ '. Check to confirm and verify your Registration');
                             res.redirect('/login');

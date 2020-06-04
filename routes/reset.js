@@ -75,7 +75,7 @@ router.get('/:token', function(req, res) {
                       client.messages.create({
                         from: 'whatsapp:+14155238886',
                         to: 'whatsapp:+91'+user.pno,
-                        body: 'Your Password has been updated successfully.\n\nTeam Blockbusters'
+                        body: 'Dear Voter,\nYour Password has been updated successfully.\n\nTeam Blockbusters'
                       }).then(message => console.log(message.sid));
                         req.flash('success_msg', 'Success! Your password has been changed.');
                       done(err);

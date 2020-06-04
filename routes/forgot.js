@@ -64,7 +64,7 @@ router.post('/', function(req, res, next) {
           client.messages.create({
             from: 'whatsapp:+14155238886',
             to: 'whatsapp:+91'+user.pno,
-            body: 'Your Password reset link has been send to '+user.email+'.\n\nTeam Blockbusters'
+            body: 'Dear Voter,\nYour Password reset link has been send to '+user.email+'.\n\nTeam Blockbusters'
           }).then(message => console.log(message.sid));
           req.flash('success_msg', 'An e-mail has been sent to '+ user.email + ' with further instructions.\nCheck Spam folder also. Link will expire in 1 Hour.');
           res.redirect('/login');
