@@ -7,6 +7,7 @@ const User = require('../models/User');
 const login = require('./login');
 const voted = require('../models/hasVoted');
 let hash=[];
+var nodemailer = require('nodemailer');
 const accountSid = 'AC720dd0cea060426d8902c66068d5fe47';
 const authToken = '2ebe506e4a218bedc537e4e1e07006a0';
 var client = require('twilio')(accountSid,authToken);
@@ -127,6 +128,25 @@ router.post('/', function(req, res, next) {
       //RENDER THE SUCESS PAGE
       res.render('success', {mailHash:reciept.transactionHash});
     }).then( () => {
+      var smtpTransport = nodemailer.createTransport({
+        service: 'gmail',
+        host: 'smtp.gmail.com',
+        auth: {
+          user: 'teamblockbusterinc@gmail.com',
+          pass: 'evoting123'
+        }
+      });
+      var mailOptions = {
+        to: mailId,
+        from: 'Team Blockbusters <teamblockbusterinc@gmail.com>',
+        subject: 'Successfully Casted Your Vote',
+        text: 'Dear Voter,\n\n' +
+          'This is a confirmation that your vote has been successfully casted.\nYou can verify your vote in\n\n'+
+          'http://' + req.headers.host + '/verification \n\nTeam Blockbusters\n'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+          req.flash('success_msg', 'Successfully casted your vote');
+      });
   //     User.findOne({ email: mailId }, function(err, user) {
   //       if (user) {
   //     client.messages.create({
