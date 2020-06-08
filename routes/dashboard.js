@@ -32,6 +32,7 @@ function ensureAuthenticated(req, res, next) {
  
 router.get('/downloadFile', ensureAuthenticated, (req,res) => {
   mailId = login.email;
+  
   var mailHash = crypto.createHash('sha256').update(mailId).digest('hex');
   var tHash;
         //db.Email.find({ mHash:mailHash})
@@ -57,17 +58,19 @@ router.get('/', ensureAuthenticated, (req,res) => {
   //Get Mail ID of the User and generate hash
   mailId = login.email;
   var mailHash = crypto.createHash('sha256').update(mailId).digest('hex');
-
+  let question;
 
   //Check whether the Voter has already voted
   Election.methods.hasVoted(mailHash)
     .call({ from: coinbase }).then((cond) => {
 
-      if(!cond) {                                               //IF NOT VOTED
+      if(!cond) {  
+        Election.methods.getQuestion()
+        .call({ from: coinbase }).then((q) => {
+            question = q;
+        });                                             //IF NOT VOTED
         Election.methods.candidatesCount()                      //DISPLAY THE CANDIDATES
           .call({ from: coinbase }).then((count) => {
-
-            console.log(coinbase);
             for ( var i = 1; i <= count; i++ ) {
               Election.methods.getCandidate(i)
                 .call({ from: coinbase }).then((val) => {
@@ -78,7 +81,7 @@ router.get('/', ensureAuthenticated, (req,res) => {
                   if(counter==count){
                     
                     counter = 0;
-                    res.render('dashboard', {cid:cid, cname:cname});                //SEND THE CANDIDATE DETAILS TO DASHBOARD.EJS
+                    res.render('dashboard', {cid:cid, cname:cname, question: question});                //SEND THE CANDIDATE DETAILS TO DASHBOARD.EJS
                   }
               });
             }

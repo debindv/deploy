@@ -278,7 +278,6 @@ router.post('/removeUser', (req,res) => {
   });
 
 //COMPLETE USERS LIST
-
 router.get('/completeList',ensureAuthenticated, (req,res) => {
   User.find( {}, (err, data) => {
     if (err) throw err;
@@ -289,7 +288,18 @@ router.get('/completeList',ensureAuthenticated, (req,res) => {
 
 });
 
-
+//ADD QUESTION
+router.post('/addQuestion', (req,res) => {
+  var ques = req.body.question;
+  console.log(ques);
+  Election.methods.setQuestion(ques)
+    .send({ from: coinbase, gas:6000000, gasPrice: web3.utils.toWei('0.00000009', 'ether')}).then((reciept) => {
+      console.log(reciept);
+      //RENDER THE SUCESS PAGE
+      req.flash('success_msg', `Successfully Updated Question`);
+      res.redirect('/admin/dashboard');
+    })
+});
 
 
 
