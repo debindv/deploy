@@ -289,16 +289,33 @@ router.get('/completeList',ensureAuthenticated, (req,res) => {
 });
 
 //ADD QUESTION
+var question;
 router.post('/addQuestion', (req,res) => {
-  var ques = req.body.question;
-  console.log(ques);
-  Election.methods.setQuestion(ques)
-    .send({ from: coinbase, gas:6000000, gasPrice: web3.utils.toWei('0.00000009', 'ether')}).then((reciept) => {
+  if(question == null)
+  {
+    var ques = req.body.question;
+    var ckey = req.body.cprivatekey;
+    if (ckey!= privateKey){
+    errors.push({ msg: 'Credentials do not match'});
+    res.redirect('/admin/dashboard');
+    }
+    else{
+    question = ques;
+    console.log(ques);
+    Election.methods.setQuestion(ques)
+     .send({ from: coinbase, gas:6000000, gasPrice: web3.utils.toWei('0.00000009', 'ether')}).then((reciept) => {
       console.log(reciept);
       //RENDER THE SUCESS PAGE
       req.flash('success_msg', `Successfully Updated Question`);
       res.redirect('/admin/dashboard');
     })
+  }
+  }
+  else {
+    console.log('Question cannot be changed');
+    req.flash('success_msg', `Question cannot be added`);
+    res.redirect('/admin/dashboard');
+  }  
 });
 
 
