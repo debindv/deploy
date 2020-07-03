@@ -20,6 +20,9 @@ var smtpTransport = nodemailer.createTransport({
   auth: {
       user: "teamblockbusterinc@gmail.com",
       pass: "evoting123"
+  },
+  tls:{
+    rejectUnauthorized:false
   }
 });
 
@@ -110,7 +113,7 @@ router.post('/', (req, res) => {
                   if(error){
                           console.log(error);
                           req.flash('error_msg', 'Registration failed');
-                          res.redirect('/registration');
+                          res.redirect('/register');
                   }else{
                           newUser.emailVerificationToken = token;
                           newUser.emailTokenExpiry = Date.now() + 3600000;

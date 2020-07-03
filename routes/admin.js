@@ -291,31 +291,34 @@ router.get('/completeList',ensureAuthenticated, (req,res) => {
 //ADD QUESTION
 var question;
 router.post('/addQuestion', (req,res) => {
-  if(question == null)
-  {
     var ques = req.body.question;
     var ckey = req.body.cprivatekey;
     if (ckey!= privateKey){
-    errors.push({ msg: 'Credentials do not match'});
-    res.redirect('/admin/dashboard');
+      errors.push({ msg: 'Credentials do not match'});
+      res.redirect('/admin/dashboard');
     }
     else{
-    question = ques;
-    console.log(ques);
-    Election.methods.setQuestion(ques)
-     .send({ from: coinbase, gas:6000000, gasPrice: web3.utils.toWei('0.00000009', 'ether')}).then((reciept) => {
-      console.log(reciept);
+      Election.methods.setQuestion(ques)
+      .send({ from: coinbase, gas:6000000, gasPrice: web3.utils.toWei('0.00000009', 'ether')}).then((val) => {
+      console.log(val);
       //RENDER THE SUCESS PAGE
-      req.flash('success_msg', `Successfully Updated Question`);
-      res.redirect('/admin/dashboard');
+      if(question == null )
+      {
+        req.flash('success_msg', `Successfully Updated Question`);
+        res.redirect('/admin/dashboard');
+        question = ques;
+        console.log(ques);
+      }
+      else
+      {
+        req.flash('success_msg', `Question cannot be updated`);
+        res.redirect('/admin/dashboard');
+      }  
     })
   }
-  }
-  else {
-    console.log('Question cannot be changed');
+    /*console.log('Question cannot be changed');
     req.flash('success_msg', `Question cannot be added`);
-    res.redirect('/admin/dashboard');
-  }  
+    res.redirect('/admin/dashboard');*/  
 });
 
 
