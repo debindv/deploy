@@ -292,7 +292,7 @@ router.get('/completeList',ensureAuthenticated, (req,res) => {
 var question;
 router.post('/addQuestion', (req,res) => {
     var ques = req.body.question;
-    var ckey = req.body.cprivatekey;
+    var ckey = req.body.privatekey;
     if (ckey!= privateKey){
       errors.push({ msg: 'Credentials do not match'});
       res.redirect('/admin/dashboard');
