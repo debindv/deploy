@@ -33,7 +33,7 @@ app.set('view engine','ejs');
 // 	}
 // });
 // contractAddress = '0x978841A92A077515f0742eBE691E063fb76D15FE';
-contractAddress = "0x695C6A57032c141bb7Aaa018bAA7eC46839afd6A";
+contractAddress = "0xBa2046fdE328C592f66562b872F1B988A6c29A7b";
 const contractAbi = require('./contracts/contractAbi');
 
 Provider = truffleConfig.networks.rinkeby.provider()
